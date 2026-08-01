@@ -1,0 +1,52 @@
+export type Locale = 'uz' | 'ru' | 'en';
+
+export interface I18nMessages {
+  eyebrow: string;
+  heroTitle: string;
+  heroTagline: string;
+  heroText: string;
+  startBtn: string;
+  mainSiteBtn: string;
+  panelChip: string;
+  panelStatus: string;
+  servicesKicker: string;
+  servicesTitle: string;
+  servicesDesc: string;
+  viewBtn: string;
+  platformsKicker: string;
+  platformsTitle: string;
+  platformsDesc: string;
+  feedbackLabel: string;
+  navHome: string;
+  navServices: string;
+  navPlatforms: string;
+  heroPoints: Array<{ title: string; text: string }>;
+  metrics: Array<{ label: string }>;
+  services: Array<{
+    title: string;
+    description: string;
+    logoLabel: string;
+    tag: string;
+    features: string[];
+  }>;
+  platforms: Array<{
+    title: string;
+    description: string;
+    tag: string;
+  }>;
+  brandMotto: string;
+  contactTitle: string;
+  contactAddress: string;
+  uniTitle: string;
+  uniAbout: string;
+  uniStructure: string;
+  uniManagement: string;
+  servicesColTitle: string;
+  lmsTitle: string;
+  armTitle: string;
+  interactiveTitle: string;
+  docsTitle: string;
+  privacyTitle: string;
+  termsTitle: string;
+  copyright: string;
+}

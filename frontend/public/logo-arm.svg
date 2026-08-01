@@ -1,0 +1,23 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="64" fill="#F7FAFF"/>
+  <circle cx="256" cy="164" r="106" fill="#FFFFFF" stroke="#133E78" stroke-width="12"/>
+  <path d="M184 122H260V176H184V122Z" fill="#F2F7FE"/>
+  <path d="M196 104H232V176H196V104Z" fill="#FF8A24"/>
+  <path d="M236 92H270V176H236V92Z" fill="#1F4B86"/>
+  <path d="M274 106H308V176H274V106Z" fill="#FF5A2B"/>
+  <path d="M184 122H308" stroke="#133E78" stroke-width="8"/>
+  <path d="M184 152H308" stroke="#133E78" stroke-width="8"/>
+  <path d="M332 102C364 102 390 128 390 160C390 192 364 218 332 218C300 218 274 192 274 160C274 128 300 102 332 102Z" stroke="#133E78" stroke-width="10" fill="none"/>
+  <path d="M274 160H390" stroke="#133E78" stroke-width="8"/>
+  <path d="M332 104V216" stroke="#133E78" stroke-width="8"/>
+  <path d="M292 124C305 135 312 147 312 160C312 173 305 185 292 196" stroke="#133E78" stroke-width="8"/>
+  <path d="M372 124C359 135 352 147 352 160C352 173 359 185 372 196" stroke="#133E78" stroke-width="8"/>
+  <path d="M184 220H260V274H184V220Z" fill="#F2F7FE"/>
+  <path d="M196 204H232V274H196V204Z" fill="#1F4B86"/>
+  <path d="M236 220H270V274H236V220Z" fill="#FF8A24"/>
+  <path d="M274 232H308V274H274V232Z" fill="#FF5A2B"/>
+  <path d="M184 220H308" stroke="#133E78" stroke-width="8"/>
+  <path d="M184 248H308" stroke="#133E78" stroke-width="8"/>
+  <text x="256" y="382" text-anchor="middle" fill="#133E78" font-size="132" font-family="Arial, sans-serif" font-weight="900">ARM</text>
+  <text x="256" y="444" text-anchor="middle" fill="#133E78" font-size="40" font-family="Arial, sans-serif">Axborot-resurs markazi</text>
+</svg>

@@ -1,0 +1,70 @@
+/* For information on how to create your own theme, please refer to:
+http://ionicframework.com/docs/theming/ */
+
+/* ─── Hub design tokens ─────────────────────────────────────── */
+:root {
+  --hub-page-gradient:
+    radial-gradient(circle at top left, rgba(95, 154, 255, 0.22), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(50, 178, 125, 0.16), transparent 24%),
+    linear-gradient(180deg, #f4f8ff 0%, #edf3ff 38%, #fbfdff 100%);
+
+  --hub-card-bg: rgba(255, 255, 255, 0.92);
+  --hub-card-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(243, 247, 255, 0.9));
+  --hub-point-card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(248, 251, 255, 0.72));
+  --hub-border: rgba(120, 150, 190, 0.16);
+
+  --hub-text-primary: #16345e;
+  --hub-heading: #183760;
+  --hub-text-muted: #617898;
+  --hub-text-subtle: #69809e;
+
+  --hub-feature-bg: #f3f7fc;
+  --hub-feature-color: #55718f;
+
+  --hub-kicker-color: #1d63d6;
+  --hub-kicker-bg: rgba(38, 99, 214, 0.1);
+
+  --hub-section-heading: #16345e;
+}
+
+:root.dark {
+  --hub-page-gradient:
+    radial-gradient(circle at top left, rgba(25, 55, 140, 0.32), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(15, 70, 50, 0.22), transparent 24%),
+    linear-gradient(180deg, #07101f 0%, #091525 38%, #050d1a 100%);
+
+  --hub-card-bg: rgba(14, 24, 48, 0.95);
+  --hub-card-glass: linear-gradient(135deg, rgba(16, 27, 55, 0.96), rgba(12, 20, 46, 0.92));
+  --hub-point-card-bg: linear-gradient(180deg, rgba(16, 27, 54, 0.88), rgba(12, 20, 46, 0.76));
+  --hub-border: rgba(70, 105, 165, 0.28);
+
+  --hub-text-primary: #d0e6ff;
+  --hub-heading: #c4dcff;
+  --hub-text-muted: #6a90b8;
+  --hub-text-subtle: #506a88;
+
+  --hub-feature-bg: rgba(25, 45, 88, 0.72);
+  --hub-feature-color: #7aa4c8;
+
+  --hub-kicker-color: #5a9eff;
+  --hub-kicker-bg: rgba(55, 125, 255, 0.14);
+
+  --hub-section-heading: #d0e6ff;
+}
+
+/* ─── Dark mode global typography overrides ─────────────────── */
+:root.dark .section-heading h2 {
+  color: #ffffff;
+}
+
+:root.dark .section-heading p {
+  color: #9ab8d8;
+}
+
+:root.dark .platform-card__copy h3 {
+  color: #c4dcff;
+}
+
+:root.dark .service-card h3 {
+  color: #c4dcff;
+}
