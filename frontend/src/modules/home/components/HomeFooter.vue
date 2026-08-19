@@ -1,97 +1,152 @@
 <template>
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <!-- Brand -->
-      <div class="footer-brand">
-        <div class="brand-logo-row">
-          <img src="/logo-namdtu.jpeg" alt="NamDTU" class="brand-logo-img" />
-          <strong>Namangan davlat texnika universiteti</strong>
+  <footer class="bg-[#0b1221] text-[#9ca3af] mt-xl rounded-t-3xl pt-2xl pb-lg px-gutter w-full">
+    <div class="max-w-container-max mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl mb-xl pb-xl border-b border-gray-800">
+        <!-- Brand / Logo Section -->
+        <div class="lg:col-span-4 flex flex-col gap-md">
+          <div class="flex items-center gap-sm">
+            <img 
+              alt="NamDTU Logo" 
+              class="w-12 h-12 object-cover object-left rounded-full border border-gray-700" 
+              src="/logo-namdtu.jpeg"
+            />
+            <span class="text-white font-bold text-body-lg">
+              {{ t.heroTitle }}
+            </span>
+          </div>
+          <p class="italic text-sm text-gray-400">
+            {{ t.brandMotto }}
+          </p>
+          <div class="flex gap-sm mt-sm">
+            <a 
+              class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" 
+              href="https://t.me/namdtu_rasmiy" 
+              target="_blank"
+              title="Telegram"
+            >
+              <span class="material-symbols-outlined text-white text-[20px]">send</span>
+            </a>
+            <a 
+              class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" 
+              href="https://instagram.com/namdtu_rasmiy" 
+              target="_blank"
+              title="Instagram"
+            >
+              <span class="material-symbols-outlined text-white text-[20px]">photo_camera</span>
+            </a>
+            <a 
+              class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" 
+              href="https://facebook.com/namdtu" 
+              target="_blank"
+              title="Facebook"
+            >
+              <span class="material-symbols-outlined text-white text-[20px]">facebook</span>
+            </a>
+            <a 
+              class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" 
+              href="https://youtube.com/@namdtu" 
+              target="_blank"
+              title="YouTube"
+            >
+              <span class="material-symbols-outlined text-white text-[20px]">play_arrow</span>
+            </a>
+          </div>
         </div>
-        <p class="brand-motto">{{ t.brandMotto }}</p>
-        <div class="social-links">
-          <a href="https://t.me/NamDTU_Asosiy" target="_blank" rel="noreferrer" aria-label="Telegram">
-            <ion-icon :icon="paperPlaneOutline" />
-          </a>
-          <a href="https://instagram.com/namdtu.uz" target="_blank" rel="noreferrer" aria-label="Instagram">
-            <ion-icon :icon="logoInstagram" />
-          </a>
-          <a href="https://facebook.com/namdtu" target="_blank" rel="noreferrer" aria-label="Facebook">
-            <ion-icon :icon="logoFacebook" />
-          </a>
-          <a href="https://www.youtube.com/@namdtu_uz" target="_blank" rel="noreferrer" aria-label="YouTube">
-            <ion-icon :icon="logoYoutube" />
-          </a>
+
+        <!-- Link Columns -->
+        <div class="lg:col-span-2">
+          <h4 class="text-[#DD8D1D] font-bold text-label-sm mb-md flex items-center border-l-2 border-[#DD8D1D] pl-2 uppercase tracking-wide">
+            {{ t.contactTitle }}
+          </h4>
+          <ul class="space-y-md text-sm text-gray-400">
+            <li class="flex items-start gap-sm">
+              <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
+              <span>{{ t.contactAddress }}</span>
+            </li>
+            <li class="flex items-center gap-sm">
+              <span class="material-symbols-outlined text-[18px]">call</span>
+              <span>(69)-234-14-30</span>
+            </li>
+            <li class="flex items-center gap-sm">
+              <span class="material-symbols-outlined text-[18px]">mail</span>
+              <span>namdtu_info@edu.uz</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <h4 class="text-[#DD8D1D] font-bold text-label-sm mb-md flex items-center border-l-2 border-[#DD8D1D] pl-2 uppercase tracking-wide">
+            {{ t.uniTitle }}
+          </h4>
+          <ul class="space-y-md text-sm text-gray-400">
+            <li>
+              <a class="hover:text-white transition-colors" :href="websiteUrl" target="_blank">
+                {{ t.uniAbout }}
+              </a>
+            </li>
+            <li>
+              <a class="hover:text-white transition-colors" :href="websiteUrl" target="_blank">
+                {{ t.uniStructure }}
+              </a>
+            </li>
+            <li>
+              <a class="hover:text-white transition-colors" :href="websiteUrl" target="_blank">
+                {{ t.uniManagement }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <h4 class="text-[#DD8D1D] font-bold text-label-sm mb-md flex items-center border-l-2 border-[#DD8D1D] pl-2 uppercase tracking-wide">
+            {{ t.servicesColTitle }}
+          </h4>
+          <ul class="space-y-md text-sm text-gray-400">
+            <li>
+              <a class="hover:text-white transition-colors" href="https://student-elms.namdtu.uz/" target="_blank">
+                {{ t.lmsTitle }}
+              </a>
+            </li>
+            <li>
+              <a class="hover:text-white transition-colors" href="https://library.namdtu.uz/" target="_blank">
+                {{ t.armTitle }}
+              </a>
+            </li>
+            <li>
+              <a class="hover:text-white transition-colors" href="https://regoffice.namdtu.uz/" target="_blank">
+                {{ t.interactiveTitle }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <h4 class="text-[#DD8D1D] font-bold text-label-sm mb-md flex items-center border-l-2 border-[#DD8D1D] pl-2 uppercase tracking-wide">
+            {{ t.docsTitle }}
+          </h4>
+          <ul class="space-y-md text-sm text-gray-400">
+            <li>
+              <a class="hover:text-white transition-colors" href="#">
+                {{ t.privacyTitle }}
+              </a>
+            </li>
+            <li>
+              <a class="hover:text-white transition-colors" href="#">
+                {{ t.termsTitle }}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <!-- Contacts -->
-      <div class="footer-col">
-        <h4>{{ t.contactTitle }}</h4>
-        <ul>
-          <li>
-            <ion-icon :icon="locationOutline" class="col-icon" />
-            <span>{{ t.contactAddress }}</span>
-          </li>
-          <li>
-            <ion-icon :icon="callOutline" class="col-icon" />
-            <a href="tel:+998692341430">(69)-234-14-30</a>
-          </li>
-          <li>
-            <ion-icon :icon="mailOutline" class="col-icon" />
-            <a href="mailto:namdtu_info@edu.uz">namdtu_info@edu.uz</a>
-          </li>
-        </ul>
+      <div class="text-center text-xs text-gray-500 pb-sm">
+        {{ t.copyright }}
       </div>
-
-      <!-- University -->
-      <div class="footer-col">
-        <h4>{{ t.uniTitle }}</h4>
-        <ul>
-          <li><a href="https://namdtu.uz/about" target="_blank" rel="noreferrer">{{ t.uniAbout }}</a></li>
-          <li><a href="https://namdtu.uz/structure" target="_blank" rel="noreferrer">{{ t.uniStructure }}</a></li>
-          <li><a href="https://namdtu.uz/management" target="_blank" rel="noreferrer">{{ t.uniManagement }}</a></li>
-        </ul>
-      </div>
-
-      <!-- Services -->
-      <div class="footer-col">
-        <h4>{{ t.servicesColTitle }}</h4>
-        <ul>
-          <li><a href="https://student-elms.namdtu.uz/" target="_blank" rel="noreferrer">{{ t.lmsTitle }}</a></li>
-          <li><a href="https://library.namdtu.uz" target="_blank" rel="noreferrer">{{ t.armTitle }}</a></li>
-          <li><a href="https://namdtu.uz/services" target="_blank" rel="noreferrer">{{ t.interactiveTitle }}</a></li>
-        </ul>
-      </div>
-
-      <!-- Documents -->
-      <div class="footer-col">
-        <h4>{{ t.docsTitle }}</h4>
-        <ul>
-          <li><a href="https://namdtu.uz/privacy" target="_blank" rel="noreferrer">{{ t.privacyTitle }}</a></li>
-          <li><a href="https://namdtu.uz/terms" target="_blank" rel="noreferrer">{{ t.termsTitle }}</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-divider"></div>
-
-    <div class="footer-bottom">
-      <p>{{ t.copyright }}</p>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import { IonIcon } from '@ionic/vue';
-import {
-  callOutline,
-  locationOutline,
-  logoFacebook,
-  logoInstagram,
-  logoYoutube,
-  mailOutline,
-  paperPlaneOutline,
-} from 'ionicons/icons';
 import { useLocale } from '../../../composables/useLocale';
 
 defineProps<{
@@ -100,7 +155,3 @@ defineProps<{
 
 const { t } = useLocale();
 </script>
-
-<style scoped>
-@import './HomeFooter.css';
-</style>

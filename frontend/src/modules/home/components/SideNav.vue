@@ -27,40 +27,107 @@ const { t } = useLocale();
 
 const navItems = computed(() => [
   { id: 'hero', icon: homeOutline, label: t.value.navHome },
-  { id: 'services', icon: chatbubblesOutline, label: t.value.navServices },
   { id: 'platforms', icon: gridOutline, label: t.value.navPlatforms },
+  { id: 'services', icon: chatbubblesOutline, label: t.value.navServices },
 ]);
 
 const activeId = ref<string>('hero');
 
+let isProgrammaticScroll = false;
+let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+let ionContentEl: Element | null = null;
+
 function scrollTo(id: string) {
+  activeId.value = id;
+  isProgrammaticScroll = true;
+
+  if (scrollTimeout) clearTimeout(scrollTimeout);
+
+  if (id === 'hero') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const content = document.querySelector('ion-content');
+    if (content && (content as any).scrollToTop) {
+      (content as any).scrollToTop(400);
+    }
+  }
+
   const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  scrollTimeout = setTimeout(() => {
+    isProgrammaticScroll = false;
+  }, 800);
 }
 
-let observer: IntersectionObserver | null = null;
+let scrollInnerEl: Element | null = null;
 
-onMounted(() => {
-  const sections = ['hero', 'services', 'platforms']
-    .map((id) => document.getElementById(id))
-    .filter((el): el is HTMLElement => !!el);
+function handleScrollCheck() {
+  if (isProgrammaticScroll) return;
 
-  observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) activeId.value = visible.target.id;
-    },
-    { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
-  );
+  const heroEl = document.getElementById('hero');
+  const platformsEl = document.getElementById('platforms');
+  const servicesEl = document.getElementById('services');
 
-  sections.forEach((s) => observer!.observe(s));
+  const navThreshold = 220;
+
+  if (servicesEl) {
+    const sRect = servicesEl.getBoundingClientRect();
+    if (sRect.top <= navThreshold && sRect.bottom > 100) {
+      activeId.value = 'services';
+      return;
+    }
+  }
+
+  if (platformsEl) {
+    const pRect = platformsEl.getBoundingClientRect();
+    if (pRect.top <= navThreshold && pRect.bottom > 120) {
+      activeId.value = 'platforms';
+      return;
+    }
+  }
+
+  if (heroEl) {
+    const hRect = heroEl.getBoundingClientRect();
+    if (hRect.bottom > navThreshold) {
+      activeId.value = 'hero';
+      return;
+    }
+  }
+}
+
+onMounted(async () => {
+  window.addEventListener('scroll', handleScrollCheck, { passive: true });
+  document.addEventListener('scroll', handleScrollCheck, { passive: true });
+
+  ionContentEl = document.querySelector('ion-content');
+  if (ionContentEl) {
+    ionContentEl.addEventListener('ionScroll', handleScrollCheck as any);
+    ionContentEl.addEventListener('scroll', handleScrollCheck, { passive: true });
+
+    if ((ionContentEl as any).getScrollElement) {
+      scrollInnerEl = await (ionContentEl as any).getScrollElement();
+      if (scrollInnerEl) {
+        scrollInnerEl.addEventListener('scroll', handleScrollCheck, { passive: true });
+      }
+    }
+  }
+
+  setTimeout(handleScrollCheck, 200);
 });
 
 onBeforeUnmount(() => {
-  observer?.disconnect();
-  observer = null;
+  if (scrollTimeout) clearTimeout(scrollTimeout);
+  window.removeEventListener('scroll', handleScrollCheck);
+  document.removeEventListener('scroll', handleScrollCheck);
+  if (ionContentEl) {
+    ionContentEl.removeEventListener('ionScroll', handleScrollCheck as any);
+    ionContentEl.removeEventListener('scroll', handleScrollCheck);
+  }
+  if (scrollInnerEl) {
+    scrollInnerEl.removeEventListener('scroll', handleScrollCheck);
+  }
 });
 </script>
 
@@ -172,18 +239,21 @@ onBeforeUnmount(() => {
   color: var(--hub-heading);
 }
 
-:root.dark .dot {
+:root.dark .dot,
+.dark .dot {
   background: rgba(20, 36, 64, 0.9);
   border-color: rgba(120, 160, 220, 0.35);
   color: #9ab8d8;
 }
 
-:root.dark .label {
+:root.dark .label,
+.dark .label {
   background: rgba(20, 36, 64, 0.95);
   color: #e5eefc;
 }
 
-:root.dark .side-nav li.active .dot {
+:root.dark .side-nav li.active .dot,
+.dark .side-nav li.active .dot {
   background: linear-gradient(135deg, #5a9eff, #2d6cea);
   border-color: #5a9eff;
   color: #ffffff;
@@ -231,7 +301,8 @@ onBeforeUnmount(() => {
     display: none;
   }
 
-  :root.dark .side-nav ul {
+  :root.dark .side-nav ul,
+  .dark .side-nav ul {
     background: linear-gradient(
       135deg,
       rgba(20, 36, 64, 0.88) 0%,

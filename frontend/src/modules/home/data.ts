@@ -1,67 +1,22 @@
-import {
-  appsOutline,
-  flashOutline,
-  phonePortraitOutline,
-} from 'ionicons/icons';
-
 export const mainWebsiteUrl = 'https://namdtu.uz/';
 
-/** Non-translatable metric values — order must match i18n.metrics */
-export const metricsValues: string[] = ['1', '3', '6+'];
+export interface PlatformMeta {
+  id: string;
+  url: string;
+  icon: string;
+}
 
-/** Icon per hero point — order must match i18n.heroPoints */
-export const heroPointIcons: string[] = [appsOutline, flashOutline, phonePortraitOutline];
-
-/** Technical data per service card — order must match i18n.services */
-export const serviceLinks = [
-  {
-    href: 'https://t.me/nstu_tech_support_bot',
-    theme: 'theme-support',
-    logoSrc: '/logo-arm.png',
-  },
-  {
-    href: 'https://t.me/nstu_registrator_office_bot',
-    theme: 'theme-registrator',
-    logoSrc: '/logo-registrator.png',
-  },
-  {
-    href: 'https://t.me/nammtikutubxonabot',
-    theme: 'theme-library',
-    logoSrc: '/logo-tech-support.jpg',
-  },
+export const webPlatformMeta: PlatformMeta[] = [
+  { id: 'official-site', url: 'https://namdtu.uz/', icon: 'language' },
+  { id: 'hemis-student', url: 'https://student.namdtu.uz/dashboard/login', icon: 'school' },
+  { id: 'hemis-staff', url: 'https://hemis.namdtu.uz/dashboard/login', icon: 'badge' },
+  { id: 'reg-office', url: 'https://regoffice.namdtu.uz/', icon: 'assignment_ind' },
+  { id: 'arm-library', url: 'https://library.namdtu.uz/', icon: 'library_books' },
+  { id: 'lms-elearning', url: 'https://student-elms.namdtu.uz/', icon: 'laptop_chromebook' },
 ];
 
-/** Technical data per platform card — order must match i18n.platforms */
-export const platformLinks = [
-  {
-    href: 'https://namdtu.uz/',
-    theme: 'theme-site',
-    logoSrc: '/logo-namdtu.jpeg',
-  },
-  {
-    href: 'https://student.namdtu.uz/dashboard/login',
-    theme: 'theme-student',
-    logoSrc: '/logo-namdtu.jpeg',
-  },
-  {
-    href: 'https://hemis.namdtu.uz/dashboard/login',
-    theme: 'theme-staff',
-    logoSrc: '/logo-namdtu.jpeg',
-  },
-  {
-    href: 'https://regoffice.namdtu.uz/',
-    theme: 'theme-regoffice',
-    logoSrc: '/logo-registrator.png',
-  },
-  {
-    href: 'https://library.namdtu.uz/',
-    theme: 'theme-library-web',
-    logoSrc: '/logo-arm.png',
-  },
-  {
-    href: 'https://student-elms.namdtu.uz/',
-    theme: 'theme-lms',
-    logoSrc: '/logo-namdtu.jpeg',
-  },
+export const telegramBotMeta: PlatformMeta[] = [
+  { id: 'tech-support-bot', url: 'https://t.me/nstu_tech_support_bot', icon: 'smart_toy' },
+  { id: 'registrator-bot', url: 'https://t.me/nstu_registrator_office_bot', icon: 'support_agent' },
+  { id: 'library-bot', url: 'https://t.me/nammtikutubxonabot', icon: 'auto_stories' },
 ];
-
