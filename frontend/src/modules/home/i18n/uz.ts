@@ -146,7 +146,7 @@ export const uz: I18nMessages = {
   teacherTab: "Xodim / O'qituvchi",
   studentIdLabel: 'HEMIS ID (Talaba raqami)',
   staffLoginLabel: 'HEMIS Login',
-  studentIdPlaceholder: 'Talaba ID (masalan: 3822...)',
+  studentIdPlaceholder: 'Talaba ID',
   staffLoginPlaceholder: 'xodim_login',
   passwordLabel: 'Parol',
   forgotPassword: 'Parolni unutdingizmi?',
