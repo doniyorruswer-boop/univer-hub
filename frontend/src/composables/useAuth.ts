@@ -55,13 +55,13 @@ export function useAuth() {
     const cleanPassword = (passwordInput || '').trim();
 
     if (!cleanLogin || !cleanPassword) {
-      authError.value = "HEMIS login va parolini kiriting!";
+      authError.value = "Login va parolni kiriting!";
       isLoading.value = false;
       return false;
     }
 
     if (cleanLogin.length > 50 || cleanPassword.length > 100) {
-      authError.value = "Ma'lumotlar uzunligi ruxsat etilgan me'yordan oshdi.";
+      authError.value = "Ma'lumotlar hajmi oshib ketdi.";
       isLoading.value = false;
       return false;
     }
@@ -81,16 +81,16 @@ export function useAuth() {
           closeLoginModal();
           return true;
         } else {
-          authError.value = resData.message || "HEMIS: Kiritilgan login yoki parol noto'g'ri!";
+          authError.value = resData.message || "Login yoki parol noto'g'ri!";
           return false;
         }
       }
 
-      authError.value = "HEMIS Backend xizmati bilan bog'lanishda xatolik!";
+      authError.value = "Server bilan bog'lanishda xatolik!";
       return false;
 
     } catch (err: any) {
-      authError.value = err?.message || "HEMIS tizimiga ulanishda xatolik yuz berdi.";
+      authError.value = err?.message || "Ulanishda xatolik yuz berdi.";
       return false;
     } finally {
       isLoading.value = false;

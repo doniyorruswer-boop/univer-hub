@@ -43,7 +43,7 @@ app.post('/api/auth/hemis-login', async (req, res) => {
   if (!login || !login.trim() || !password || !password.trim()) {
     return res.status(400).json({ 
       success: false, 
-      message: "HEMIS Login va parolini kiritish majburiy!" 
+      message: "Login va parolni kiriting!" 
     });
   }
 
@@ -124,13 +124,9 @@ app.post('/api/auth/hemis-login', async (req, res) => {
     const rawError = errorData?.error || errorData?.message || (typeof errorData === 'string' ? errorData : error.message) || '';
     console.error(`[HEMIS Real Auth REJECTED] User '${maskedLogin}':`, rawError);
 
-    let clientMessage = "HEMIS: Kiritilgan login yoki parol noto'g'ri!";
+    let clientMessage = "Login yoki parol noto'g'ri!";
     if (typeof rawError === 'string' && rawError.toLowerCase().includes('captcha')) {
-      clientMessage = "HEMIS: Urinishlar soni ko'payib ketdi. 5 daqiqadan so'ng qayta urinib ko'ring yoki student.namdtu.uz / hemis.namdtu.uz orqali kiring.";
-    } else if (role === 'teacher') {
-      clientMessage = "HEMIS: Xodim profili bloklangan bo'lishi yoki login/parol noto'g'ri bo'lishi mumkin (hemis.namdtu.uz administratoriga murojaat qiling).";
-    } else if (typeof rawError === 'string' && rawError.trim().length > 0 && !rawError.includes('Request failed')) {
-      clientMessage = `HEMIS: ${rawError}`;
+      clientMessage = "Urinishlar soni ko'payib ketdi. Birozdan so'ng qayta urinib ko'ring.";
     }
 
     return res.status(401).json({
