@@ -53,7 +53,7 @@ export function useAuth() {
 
     try {
       // 1. Direct call to NamDTU HUB Backend Gateway (which proxies directly to HEMIS OTM API)
-      const response = await fetch('http://localhost:5000/api/auth/hemis-login', {
+      const response = await fetch('/api/auth/hemis-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ login: loginInput, password: passwordInput, role: userRole }),

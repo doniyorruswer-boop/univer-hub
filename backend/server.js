@@ -129,10 +129,15 @@ app.post('/api/auth/hemis-login', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`===================================================`);
-  console.log(`🚀 NamDTU HUB 100% Real HEMIS Authentication Gateway`);
-  console.log(`📡 Base API: ${HEMIS_BASE_URL}`);
-  console.log(`🔒 Strict Mode: ACTIVE (No demo fallbacks)`);
-  console.log(`===================================================`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`===================================================`);
+    console.log(`🚀 NamDTU HUB 100% Real HEMIS Authentication Gateway`);
+    console.log(`📡 Base API: ${HEMIS_BASE_URL}`);
+    console.log(`🔒 Strict Mode: ACTIVE (No demo fallbacks)`);
+    console.log(`===================================================`);
+  });
+}
+
+export default app;
+

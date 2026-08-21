@@ -2,9 +2,10 @@ import { ref } from 'vue';
 
 export type Locale = 'uz' | 'ru' | 'en';
 
-// Module-level singletons — shared across all component instances
-const locale = ref<Locale>((localStorage.getItem('locale') as Locale) || 'uz');
-const isDark = ref(localStorage.getItem('theme') === 'dark');
+const savedTheme = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
+// Default to dark mode (true) on first visit if no saved preference
+const isDark = ref(savedTheme ? savedTheme === 'dark' : true);
+const locale = ref<Locale>((typeof window !== 'undefined' ? localStorage.getItem('locale') as Locale : null) || 'uz');
 
 export function useApp() {
   function toggleDark() {
