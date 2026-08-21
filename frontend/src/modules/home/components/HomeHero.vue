@@ -110,9 +110,9 @@
                   </div>
                 </div>
 
-                <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  99.9% Uptime
+                <span class="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                  {{ t.officialBotTag }}
                 </span>
               </div>
 
@@ -194,7 +194,7 @@
 
     <!-- Restored & Enhanced Stats Section -->
     <div class="max-w-container-max mx-auto px-gutter pb-12">
-      <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
         
         <div class="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl text-center hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
           <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform">
@@ -217,18 +217,6 @@
           </div>
           <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
             {{ t.metrics[0]?.label || "Foydalanuvchilar" }}
-          </div>
-        </div>
-
-        <div class="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl text-center hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mb-2 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-xl">verified</span>
-          </div>
-          <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-blue-600 dark:from-white dark:to-blue-300">
-            99.9%
-          </div>
-          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-            {{ t.panelStatus }}
           </div>
         </div>
 
