@@ -120,13 +120,20 @@ app.post('/api/auth/hemis-login', async (req, res) => {
     });
 
   } catch (error) {
-    const errorMsg = error?.response?.data?.message || error?.response?.data?.data || error.message;
-    console.error(`[HEMIS Real Auth REJECTED] User '${maskedLogin}':`, errorMsg);
+    const errorData = error?.response?.data;
+    const rawError = errorData?.error || errorData?.message || (typeof errorData === 'string' ? errorData : error.message) || '';
+    console.error(`[HEMIS Real Auth REJECTED] User '${maskedLogin}':`, rawError);
 
-    // STRICT REJECTION: NO FALLBACK, NO DUMMY LOGINS ACCEPTED!
+    let clientMessage = "HEMIS: Kiritilgan login yoki parol noto'g'ri!";
+    if (typeof rawError === 'string' && rawError.toLowerCase().includes('captcha')) {
+      clientMessage = "HEMIS: Urinishlar soni ko'payib ketdi. 5 daqiqadan so'ng qayta urinib ko'ring yoki student.namdtu.uz sahifasida tizimga kiring.";
+    } else if (typeof rawError === 'string' && rawError.trim().length > 0 && !rawError.includes('Request failed')) {
+      clientMessage = `HEMIS: ${rawError}`;
+    }
+
     return res.status(401).json({
       success: false,
-      message: "HEMIS: Kiritilgan login yoki parol noto'g'ri!",
+      message: clientMessage,
     });
   }
 });
