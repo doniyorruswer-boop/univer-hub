@@ -58,6 +58,14 @@
             </button>
           </div>
 
+          <!-- Teacher Notice -->
+          <div v-if="role === 'teacher'" class="mb-4 p-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/50 text-blue-700 dark:text-blue-300 text-[11px] flex items-center justify-between">
+            <span>Xodimlar uchun rasmiy portal:</span>
+            <a href="https://hemis.namdtu.uz/dashboard/login" target="_blank" class="font-bold underline hover:text-blue-900 dark:hover:text-white flex items-center gap-0.5">
+              hemis.namdtu.uz <span class="material-symbols-outlined text-xs">open_in_new</span>
+            </a>
+          </div>
+
           <!-- Error Alert Banner -->
           <div v-if="authError" class="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
             <span class="material-symbols-outlined text-base shrink-0">error</span>
