@@ -1,9 +1,9 @@
 <template>
   <ion-page>
+    <side-nav />
     <ion-content :fullscreen="true" :scroll-events="true">
-      <div class="min-h-screen flex flex-col bg-background dark:bg-[#070c14] text-on-surface dark:text-gray-100 font-body-lg antialiased relative transition-colors duration-200">
+      <div class="min-h-screen flex flex-col bg-background dark:bg-[#070c14] text-on-surface dark:text-gray-100 font-body-lg antialiased relative">
         <app-header />
-        <side-nav />
         
         <main class="w-full mx-auto flex-grow">
           <home-hero :website-url="mainWebsiteUrl" />

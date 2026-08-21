@@ -1,9 +1,9 @@
 <template>
-  <header class="bg-surface-container-lowest dark:bg-[#0b1221] border-b border-outline-variant dark:border-gray-800 sticky top-0 z-50 transition-colors duration-200">
-    <div class="flex justify-between items-center px-lg py-sm w-full max-w-container-max mx-auto h-16">
-      <div class="flex items-center space-x-md">
-        <a href="#hero" @click.prevent="scrollTo('hero')" class="flex items-center gap-sm cursor-pointer">
-          <span class="font-headline-md text-headline-md text-[#0A1052] dark:text-white font-semibold">
+  <header class="bg-surface-container-lowest dark:bg-[#0b1221] border-b border-outline-variant dark:border-gray-800 sticky top-0 z-50">
+    <div class="flex justify-between items-center px-3 sm:px-6 w-full max-w-container-max mx-auto h-14 sm:h-16 gap-2">
+      <div class="flex items-center shrink-0">
+        <a href="#hero" @click.prevent="scrollTo('hero')" class="flex items-center gap-1.5 cursor-pointer">
+          <span class="text-sm sm:text-base md:text-lg text-[#0A1052] dark:text-white font-bold tracking-tight truncate max-w-[130px] xs:max-w-[170px] sm:max-w-none">
             NamDTU Tizimlari
           </span>
         </a>
@@ -19,59 +19,77 @@
             activeSection === link.id
               ? 'text-[#0A1052] dark:text-[#5a9eff] font-bold border-b-2 border-solid border-[#0A1052] dark:border-[#5a9eff]'
               : 'text-secondary dark:text-gray-400 font-medium hover:text-[#0A1052] dark:hover:text-white border-b-2 border-solid border-transparent',
-            'font-body-md pb-1 transition-all duration-150 cursor-pointer inline-block'
+            'font-body-md pb-1 cursor-pointer inline-block'
           ]"
         >
           {{ link.label }}
         </a>
       </nav>
 
-      <div class="flex items-center space-x-sm">
-        <div class="flex items-center gap-xs mr-sm">
+      <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+        <!-- Language Dropdown Switcher -->
+        <div class="relative shrink-0" ref="langMenuRef">
           <button 
-            @click="setLocale('uz')" 
-            :class="locale === 'uz' ? 'text-[#0A1052] dark:text-[#5a9eff] font-bold underline' : 'text-secondary dark:text-gray-400 font-medium hover:text-[#0A1052] dark:hover:text-white'" 
-            class="text-label-sm transition-colors px-xs"
+            @click="isLangMenuOpen = !isLangMenuOpen"
+            class="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors border border-slate-200/80 dark:border-slate-700 cursor-pointer"
+            :title="`Current language: ${locale.toUpperCase()}`"
           >
-            UZ
+            <span class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">translate</span>
+            <span class="uppercase font-mono text-[11px] sm:text-xs">{{ locale }}</span>
+            <span 
+              class="material-symbols-outlined text-xs text-slate-400 transition-transform duration-200" 
+              :class="isLangMenuOpen ? 'rotate-180' : ''"
+            >
+              expand_more
+            </span>
           </button>
-          <span class="text-outline-variant dark:text-gray-600 text-label-sm">|</span>
-          <button 
-            @click="setLocale('ru')" 
-            :class="locale === 'ru' ? 'text-[#0A1052] dark:text-[#5a9eff] font-bold underline' : 'text-secondary dark:text-gray-400 font-medium hover:text-[#0A1052] dark:hover:text-white'" 
-            class="text-label-sm transition-colors px-xs"
-          >
-            RU
-          </button>
-          <span class="text-outline-variant dark:text-gray-600 text-label-sm">|</span>
-          <button 
-            @click="setLocale('en')" 
-            :class="locale === 'en' ? 'text-[#0A1052] dark:text-[#5a9eff] font-bold underline' : 'text-secondary dark:text-gray-400 font-medium hover:text-[#0A1052] dark:hover:text-white'" 
-            class="text-label-sm transition-colors px-xs"
-          >
-            EN
-          </button>
+
+          <!-- Language Options Menu -->
+          <Transition name="dropdown">
+            <div 
+              v-if="isLangMenuOpen"
+              class="absolute right-0 top-full mt-1.5 w-32 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl p-1 z-50 transform origin-top-right transition-all duration-200"
+            >
+              <button 
+                v-for="lang in availableLanguages" 
+                :key="lang.code"
+                @click="selectLanguage(lang.code)"
+                :class="[
+                  locale === lang.code 
+                    ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 font-bold' 
+                    : 'text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800',
+                  'w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-colors cursor-pointer'
+                ]"
+              >
+                <span class="flex items-center gap-1.5">
+                  <span>{{ lang.flag }}</span>
+                  <span>{{ lang.label }}</span>
+                </span>
+                <span v-if="locale === lang.code" class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">check</span>
+              </button>
+            </div>
+          </Transition>
         </div>
 
         <!-- Light/Dark Mode Switcher -->
         <button 
           @click="toggleDark" 
-          class="p-sm text-secondary dark:text-gray-300 hover:bg-surface-container dark:hover:bg-gray-800 rounded-full transition-colors duration-150 flex items-center justify-center"
+          class="p-1.5 sm:p-2 text-secondary dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full flex items-center justify-center shrink-0"
           :title="isDark ? 'Light mode' : 'Dark mode'"
         >
-          <span class="material-symbols-outlined">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
+          <span class="material-symbols-outlined text-lg sm:text-xl">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
         </button>
 
         <!-- SSO Logged In User Badge or Login Button -->
-        <div v-if="isLoggedIn" class="relative" ref="profileMenuRef">
+        <div v-if="isLoggedIn" class="relative shrink-0" ref="profileMenuRef">
           <button 
             @click="isProfileMenuOpen = !isProfileMenuOpen"
-            class="flex items-center gap-2 p-1.5 pr-3 rounded-full bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/80 dark:hover:bg-slate-700 transition-all cursor-pointer"
+            class="flex items-center gap-1.5 p-1 sm:p-1.5 pr-2 sm:pr-3 rounded-full bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/80 dark:hover:bg-slate-700 cursor-pointer"
           >
             <img 
               :src="user?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80'" 
               alt="User Avatar"
-              class="w-7 h-7 rounded-full object-cover border border-blue-500"
+              class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-blue-500 shrink-0"
             />
             <div class="text-left hidden sm:block">
               <div class="text-xs font-bold text-slate-900 dark:text-white leading-tight">
@@ -133,9 +151,9 @@
         <router-link 
           v-else
           to="/login"
-          class="inline-flex items-center justify-center gap-2 font-label-md px-4 py-2 rounded-xl transition-all hover:opacity-95 shadow-md bg-gradient-to-r from-[#0A1052] to-blue-700 dark:from-blue-600 dark:to-indigo-600 text-white font-bold text-xs cursor-pointer" 
+          class="inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl shadow-sm bg-gradient-to-r from-[#0A1052] to-blue-700 dark:from-blue-600 dark:to-indigo-600 text-white font-bold text-[11px] sm:text-xs cursor-pointer shrink-0" 
         >
-          <span class="material-symbols-outlined text-base">vpn_key</span>
+          <span class="material-symbols-outlined text-sm sm:text-base">vpn_key</span>
           <span>{{ t.loginBtnText }}</span>
         </router-link>
 
@@ -150,6 +168,8 @@ import { useApp } from '../../../composables/useApp';
 import { useAuth } from '../../../composables/useAuth';
 import { useLocale } from '../../../composables/useLocale';
 
+import type { Locale } from '../../../composables/useApp';
+
 const { locale, setLocale, isDark, toggleDark } = useApp();
 const { t } = useLocale();
 const { user, isLoggedIn, logout } = useAuth();
@@ -158,14 +178,32 @@ const activeSection = ref<string>('hero');
 const isProfileMenuOpen = ref<boolean>(false);
 const profileMenuRef = ref<HTMLElement | null>(null);
 
+const isLangMenuOpen = ref<boolean>(false);
+const langMenuRef = ref<HTMLElement | null>(null);
+
+const availableLanguages = [
+  { code: 'uz' as Locale, flag: '🇺🇿', label: "O'zbek" },
+  { code: 'ru' as Locale, flag: '🇷🇺', label: 'Русский' },
+  { code: 'en' as Locale, flag: '🇬🇧', label: 'English' },
+];
+
+function selectLanguage(code: Locale) {
+  setLocale(code);
+  isLangMenuOpen.value = false;
+}
+
 function handleLogout() {
   logout();
   isProfileMenuOpen.value = false;
 }
 
 function handleClickOutside(event: MouseEvent) {
-  if (profileMenuRef.value && !profileMenuRef.value.contains(event.target as Node)) {
+  const target = event.target as Node;
+  if (profileMenuRef.value && !profileMenuRef.value.contains(target)) {
     isProfileMenuOpen.value = false;
+  }
+  if (langMenuRef.value && !langMenuRef.value.contains(target)) {
+    isLangMenuOpen.value = false;
   }
 }
 

@@ -136,8 +136,10 @@ onBeforeUnmount(() => {
   position: fixed;
   left: 18px;
   top: 50%;
-  transform: translateY(-50%);
-  z-index: 40;
+  transform: translateY(-50%) translateZ(0);
+  -webkit-transform: translateY(-50%) translateZ(0);
+  will-change: transform;
+  z-index: 100;
   pointer-events: none;
 }
 
@@ -178,7 +180,6 @@ onBeforeUnmount(() => {
   color: var(--hub-text-muted);
   font-size: 0.95rem;
   font-weight: 600;
-  transition: color 200ms;
 }
 
 .dot {
@@ -193,7 +194,6 @@ onBeforeUnmount(() => {
   background: var(--hub-card-bg, #ffffff);
   border: 2px solid rgba(120, 160, 220, 0.45);
   color: var(--hub-text-muted);
-  transition: all 220ms;
   box-shadow: 0 3px 14px rgba(30, 60, 120, 0.1);
   flex-shrink: 0;
 }
@@ -205,7 +205,7 @@ onBeforeUnmount(() => {
 .label {
   opacity: 0;
   transform: translateX(-6px);
-  transition: opacity 200ms, transform 200ms;
+  transition: opacity 150ms ease, transform 150ms ease;
   white-space: nowrap;
   padding: 7px 16px;
   border-radius: 12px;
@@ -225,7 +225,6 @@ onBeforeUnmount(() => {
 .side-nav a:hover .dot {
   border-color: #2d6cea;
   color: #2d6cea;
-  transform: scale(1.08);
 }
 
 .side-nav li.active .dot {
@@ -241,7 +240,7 @@ onBeforeUnmount(() => {
 
 :root.dark .dot,
 .dark .dot {
-  background: rgba(20, 36, 64, 0.9);
+  background: rgba(20, 36, 64, 0.95);
   border-color: rgba(120, 160, 220, 0.35);
   color: #9ab8d8;
 }
@@ -259,28 +258,26 @@ onBeforeUnmount(() => {
   color: #ffffff;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .side-nav {
     left: 50%;
     top: auto;
-    bottom: 18px;
-    transform: translateX(-50%);
+    bottom: 20px;
+    transform: translateX(-50%) translateZ(0);
+    -webkit-transform: translateX(-50%) translateZ(0);
+    z-index: 999;
   }
 
   .side-nav ul {
     flex-direction: row;
-    gap: 10px;
-    padding: 10px 14px;
+    gap: 12px;
+    padding: 8px 16px;
     border-radius: 999px;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.85) 0%,
-      rgba(235, 243, 255, 0.78) 100%
-    );
-    backdrop-filter: blur(18px) saturate(1.4);
-    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(180, 210, 255, 0.5);
-    box-shadow: 0 12px 40px rgba(30, 60, 120, 0.22);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
   }
 
   .side-nav ul::before {
@@ -288,8 +285,8 @@ onBeforeUnmount(() => {
   }
 
   .dot {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     box-shadow: none;
   }
 
@@ -303,12 +300,9 @@ onBeforeUnmount(() => {
 
   :root.dark .side-nav ul,
   .dark .side-nav ul {
-    background: linear-gradient(
-      135deg,
-      rgba(20, 36, 64, 0.88) 0%,
-      rgba(14, 26, 50, 0.82) 100%
-    );
+    background: rgba(15, 23, 42, 0.92);
     border-color: rgba(90, 140, 220, 0.35);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   }
 }
 </style>
