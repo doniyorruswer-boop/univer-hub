@@ -76,6 +76,8 @@
                 v-model="loginInput"
                 type="text" 
                 required
+                maxlength="50"
+                autocomplete="username"
                 :placeholder="role === 'student' ? '3822100014' : 'xodim_login'" 
                 class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#0A1052] dark:focus:border-blue-500 focus:ring-1 focus:ring-[#0A1052] dark:focus:ring-blue-500 transition-colors font-mono"
               />
@@ -96,6 +98,8 @@
                   v-model="passwordInput"
                   :type="showPassword ? 'text' : 'password'" 
                   required
+                  maxlength="100"
+                  autocomplete="current-password"
                   placeholder="••••••••" 
                   class="w-full pl-3.5 pr-10 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#0A1052] dark:focus:border-blue-500 focus:ring-1 focus:ring-[#0A1052] dark:focus:ring-blue-500 transition-colors"
                 />

@@ -140,6 +140,8 @@
                   v-model="loginInput"
                   type="text" 
                   required
+                  maxlength="50"
+                  autocomplete="username"
                   :placeholder="role === 'student' ? t.studentIdPlaceholder : t.staffLoginPlaceholder" 
                   class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#0A1052] dark:focus:border-blue-500 focus:ring-1 focus:ring-[#0A1052] dark:focus:ring-blue-500 transition-colors font-mono"
                 />
@@ -160,6 +162,8 @@
                     v-model="passwordInput"
                     :type="showPassword ? 'text' : 'password'" 
                     required
+                    maxlength="100"
+                    autocomplete="current-password"
                     placeholder="••••••••" 
                     class="w-full pl-4 pr-11 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#0A1052] dark:focus:border-blue-500 focus:ring-1 focus:ring-[#0A1052] dark:focus:ring-blue-500 transition-colors"
                   />

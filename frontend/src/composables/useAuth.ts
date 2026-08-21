@@ -51,12 +51,27 @@ export function useAuth() {
     isLoading.value = true;
     authError.value = null;
 
+    const cleanLogin = (loginInput || '').trim();
+    const cleanPassword = (passwordInput || '').trim();
+
+    if (!cleanLogin || !cleanPassword) {
+      authError.value = "HEMIS login va parolini kiriting!";
+      isLoading.value = false;
+      return false;
+    }
+
+    if (cleanLogin.length > 50 || cleanPassword.length > 100) {
+      authError.value = "Ma'lumotlar uzunligi ruxsat etilgan me'yordan oshdi.";
+      isLoading.value = false;
+      return false;
+    }
+
     try {
       // 1. Direct call to NamDTU HUB Backend Gateway (which proxies directly to HEMIS OTM API)
       const response = await fetch('/api/auth/hemis-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ login: loginInput, password: passwordInput, role: userRole }),
+        body: JSON.stringify({ login: cleanLogin, password: cleanPassword, role: userRole }),
       }).catch(() => null);
 
       if (response) {

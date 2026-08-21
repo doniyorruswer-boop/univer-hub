@@ -50,8 +50,11 @@ app.post('/api/auth/hemis-login', async (req, res) => {
   const cleanLogin = login.trim();
   const cleanPassword = password.trim();
 
+  // Security Helper: Mask sensitive user login identifiers in logs
+  const maskedLogin = cleanLogin.length > 4 ? `${cleanLogin.slice(0, 3)}***${cleanLogin.slice(-2)}` : '****';
+
   try {
-    console.log(`[HEMIS Real Auth] Authenticating user '${cleanLogin}' via ${HEMIS_BASE_URL}/auth/login`);
+    console.log(`[HEMIS Real Auth] Authenticating user '${maskedLogin}' via ${HEMIS_BASE_URL}/auth/login`);
 
     // 1. POST Credentials directly to Official HEMIS REST API
     const loginResponse = await axios.post(
@@ -71,7 +74,7 @@ app.post('/api/auth/hemis-login', async (req, res) => {
     // Verify HEMIS server response
     if (loginResponse.data && loginResponse.data.data && loginResponse.data.data.token) {
       const hemisBearerToken = loginResponse.data.data.token;
-      console.log(`[HEMIS Auth Success] Token obtained for '${cleanLogin}'. Fetching profile...`);
+      console.log(`[HEMIS Auth Success] Token obtained for '${maskedLogin}'. Fetching profile...`);
 
       // 2. Fetch User Profile using returned Bearer Token
       let studentProfileData = null;
@@ -100,7 +103,6 @@ app.post('/api/auth/hemis-login', async (req, res) => {
         group: studentProfileData?.group?.name || "310-21 KI",
         course: studentProfileData?.level?.code || studentProfileData?.level?.name || 3,
         avatarUrl: studentProfileData?.image || null,
-        hemisToken: hemisBearerToken,
       };
 
       return res.json({
@@ -119,7 +121,7 @@ app.post('/api/auth/hemis-login', async (req, res) => {
 
   } catch (error) {
     const errorMsg = error?.response?.data?.message || error?.response?.data?.data || error.message;
-    console.error(`[HEMIS Real Auth REJECTED] User '${cleanLogin}':`, errorMsg);
+    console.error(`[HEMIS Real Auth REJECTED] User '${maskedLogin}':`, errorMsg);
 
     // STRICT REJECTION: NO FALLBACK, NO DUMMY LOGINS ACCEPTED!
     return res.status(401).json({

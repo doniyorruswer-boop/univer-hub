@@ -4,15 +4,26 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl mb-xl pb-xl border-b border-gray-800">
         <!-- Brand / Logo Section -->
         <div class="lg:col-span-4 flex flex-col gap-md">
-          <div class="flex items-center gap-sm">
+          <div class="flex items-center gap-3.5">
             <img 
               alt="NamDTU Logo" 
-              class="w-12 h-12 object-cover object-left rounded-full border border-gray-700" 
+              class="w-12 h-12 shrink-0 object-cover object-left rounded-xl border border-slate-700/80 shadow-md" 
               src="/logo-namdtu.jpeg"
             />
-            <span class="text-white font-bold text-body-lg">
-              {{ t.heroTitle }}
-            </span>
+            <h3 class="text-white font-extrabold text-base sm:text-lg lg:text-xl leading-snug tracking-tight">
+              <template v-if="locale === 'uz'">
+                Namangan davlat <br />
+                texnika universiteti
+              </template>
+              <template v-else-if="locale === 'ru'">
+                Наманганский государственный <br />
+                технический университет
+              </template>
+              <template v-else>
+                Namangan State <br />
+                Technical University
+              </template>
+            </h3>
           </div>
           <p class="italic text-sm text-gray-400">
             {{ t.brandMotto }}
@@ -156,10 +167,12 @@
 
 <script setup lang="ts">
 import { useLocale } from '../../../composables/useLocale';
+import { useApp } from '../../../composables/useApp';
 
 defineProps<{
   websiteUrl: string;
 }>();
 
 const { t } = useLocale();
+const { locale } = useApp();
 </script>
