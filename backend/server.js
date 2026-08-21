@@ -126,7 +126,9 @@ app.post('/api/auth/hemis-login', async (req, res) => {
 
     let clientMessage = "HEMIS: Kiritilgan login yoki parol noto'g'ri!";
     if (typeof rawError === 'string' && rawError.toLowerCase().includes('captcha')) {
-      clientMessage = "HEMIS: Urinishlar soni ko'payib ketdi. 5 daqiqadan so'ng qayta urinib ko'ring yoki student.namdtu.uz sahifasida tizimga kiring.";
+      clientMessage = "HEMIS: Urinishlar soni ko'payib ketdi. 5 daqiqadan so'ng qayta urinib ko'ring yoki student.namdtu.uz / hemis.namdtu.uz orqali kiring.";
+    } else if (role === 'teacher') {
+      clientMessage = "HEMIS: Xodim profili bloklangan bo'lishi yoki login/parol noto'g'ri bo'lishi mumkin (hemis.namdtu.uz administratoriga murojaat qiling).";
     } else if (typeof rawError === 'string' && rawError.trim().length > 0 && !rawError.includes('Request failed')) {
       clientMessage = `HEMIS: ${rawError}`;
     }
