@@ -109,16 +109,7 @@
               </div>
             </div>
 
-            <!-- Demo Fill Link -->
-            <div class="flex justify-end pt-0.5">
-              <button 
-                type="button" 
-                @click="fillDemoCredentials"
-                class="text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 underline cursor-pointer"
-              >
-                Sinov uchun ma'lumotlarni to'ldirish
-              </button>
-            </div>
+
 
             <!-- Solid Corporate Primary Button -->
             <button 
@@ -162,10 +153,7 @@ async function handleLogin() {
   }
 }
 
-function fillDemoCredentials() {
-  loginInput.value = '3822100014';
-  passwordInput.value = 'hemis12345';
-}
+
 </script>
 
 <style scoped>
