@@ -55,6 +55,7 @@ export interface I18nMessages {
   botCardDesc: string;
   armCardDesc: string;
   officialBotTag: string;
+  officialPortalTag: string;
   eLibraryTag: string;
   loginBtnText: string;
   logoutBtnText: string;

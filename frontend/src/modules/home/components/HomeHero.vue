@@ -112,7 +112,7 @@
 
                 <span class="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                  {{ t.officialBotTag }}
+                  {{ t.officialPortalTag }}
                 </span>
               </div>
 

@@ -29,7 +29,7 @@ export const uz: I18nMessages = {
   ],
   metrics: [
     { label: 'Yagona kirish nuqtasi' },
-    { label: 'Rasmiy Telegram bot' },
+    { label: 'Telegram bot' },
     { label: "Yo'naltiruvchi xizmat" },
   ],
   services: [
@@ -128,7 +128,8 @@ export const uz: I18nMessages = {
   hemisFeaturesDesc: 'Fanlar, Baholar & Dars jadvali integratsiyasi',
   botCardDesc: 'Talaba arizalari va tezkor xabarnomalar boti',
   armCardDesc: '1200+ elektron resurs va adabiyotlar',
-  officialBotTag: 'Rasmiy Bot',
+  officialBotTag: 'Telegram Bot',
+  officialPortalTag: 'Asosiy Portal',
   eLibraryTag: 'E-Kutubxona',
   loginBtnText: 'HEMIS Kirish',
   logoutBtnText: 'Tizimdan Chiqish',
