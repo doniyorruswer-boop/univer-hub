@@ -144,13 +144,11 @@ const HEMIS_OAUTH_AUTHORIZE_URL = process.env.HEMIS_OAUTH_AUTHORIZE_URL || 'http
 const HEMIS_TEACHER_OAUTH_AUTHORIZE_URL = process.env.HEMIS_TEACHER_OAUTH_AUTHORIZE_URL || 'https://hemis.namdtu.uz/oauth/authorize';
 
 /**
- * Get HEMIS OAuth Authorize URL endpoint (supports student and teacher roles)
+ * Get HEMIS OAuth Authorize URL endpoint
  */
 app.get('/api/auth/hemis-oauth-url', (req, res) => {
-  const role = req.query.role || 'student';
-  const redirectUri = req.query.redirect_uri || HEMIS_OAUTH_REDIRECT_URI;
-  const baseUrl = role === 'teacher' ? HEMIS_TEACHER_OAUTH_AUTHORIZE_URL : HEMIS_OAUTH_AUTHORIZE_URL;
-  const oauthUrl = `${baseUrl}?client_id=${HEMIS_OAUTH_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}`;
+  const redirectUri = HEMIS_OAUTH_REDIRECT_URI;
+  const oauthUrl = `${HEMIS_OAUTH_AUTHORIZE_URL}?client_id=${HEMIS_OAUTH_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}`;
   return res.json({ success: true, url: oauthUrl });
 });
 

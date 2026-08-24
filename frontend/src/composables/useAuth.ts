@@ -132,14 +132,14 @@ export function useAuth() {
 
   /**
    * Redirect to HEMIS OAuth 2.0 / OneID Login (Student or Teacher)
+  /**
+   * Redirect to HEMIS OAuth 2.0 / OneID Login
    */
-  async function redirectToHemisOAuth(role: 'student' | 'teacher' = 'student') {
-    const redirectUri = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? `${window.location.origin}/home`
-      : 'https://namdtu-hub-eta.vercel.app/home';
+  async function redirectToHemisOAuth(_role: 'student' | 'teacher' = 'student') {
+    const redirectUri = 'https://namdtu-hub-eta.vercel.app/home';
       
     try {
-      const res = await fetch(`/api/auth/hemis-oauth-url?role=${role}&redirect_uri=${encodeURIComponent(redirectUri)}`).catch(() => null);
+      const res = await fetch(`/api/auth/hemis-oauth-url?redirect_uri=${encodeURIComponent(redirectUri)}`).catch(() => null);
       if (res && res.ok) {
         const data = await res.json().catch(() => ({}));
         if (data.url) {
@@ -150,7 +150,7 @@ export function useAuth() {
     } catch {}
 
     const clientId = import.meta.env.VITE_HEMIS_OAUTH_CLIENT_ID || '9';
-    const baseUrl = role === 'teacher' ? 'https://hemis.namdtu.uz' : 'https://student.namdtu.uz';
+    const baseUrl = 'https://student.namdtu.uz';
     const authorizeUrl = `${baseUrl}/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}`;
     window.location.href = authorizeUrl;
   }
@@ -162,9 +162,7 @@ export function useAuth() {
     isLoading.value = true;
     authError.value = null;
 
-    const redirectUri = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? `${window.location.origin}/home`
-      : 'https://namdtu-hub-eta.vercel.app/home';
+    const redirectUri = 'https://namdtu-hub-eta.vercel.app/home';
 
     const clientId = import.meta.env.VITE_HEMIS_OAUTH_CLIENT_ID || '9';
     const clientSecret = '8Pgarj7N-NpEHy2FeqWq1o2otc2ll4c2Pfa4vQem';
