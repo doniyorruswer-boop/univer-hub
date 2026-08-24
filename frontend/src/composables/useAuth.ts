@@ -166,6 +166,69 @@ export function useAuth() {
       ? `${window.location.origin}/home`
       : 'https://namdtu-hub-eta.vercel.app/home';
 
+    const clientId = import.meta.env.VITE_HEMIS_OAUTH_CLIENT_ID || '9';
+    const clientSecret = '8Pgarj7N-NpEHy2FeqWq1o2otc2ll4c2Pfa4vQem';
+
+    // 1. Try Client-side Direct Token Exchange (Bypasses Vercel Foreign Server Geo-IP 451 Block)
+    const tokenEndpoints = [
+      'https://student.namdtu.uz/oauth/access-token',
+      'https://student.namdtu.uz/oauth/token',
+      'https://hemis.namdtu.uz/oauth/access-token',
+      'https://hemis.namdtu.uz/oauth/token',
+    ];
+
+    let accessToken: string | null = null;
+
+    for (const endpoint of tokenEndpoints) {
+      try {
+        const bodyParams = new URLSearchParams();
+        bodyParams.append('client_id', clientId);
+        bodyParams.append('client_secret', clientSecret);
+        bodyParams.append('grant_type', 'authorization_code');
+        bodyParams.append('code', code);
+        bodyParams.append('redirect_uri', redirectUri);
+
+        const tokenRes = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+          body: bodyParams.toString(),
+        }).catch(() => null);
+
+        if (tokenRes && tokenRes.ok) {
+          const tokenData = await tokenRes.json().catch(() => ({}));
+          accessToken = tokenData.access_token || tokenData.token || tokenData.data?.token || tokenData.data?.access_token;
+          if (accessToken) break;
+        }
+      } catch {}
+    }
+
+    // 2. If client-side got access token, fetch user profile directly from browser (Uzbekistan IP)
+    if (accessToken) {
+      const profileEndpoints = [
+        'https://student.namdtu.uz/rest/v1/account/me',
+        'https://hemis.namdtu.uz/rest/v1/account/me',
+      ];
+
+      for (const profEndpoint of profileEndpoints) {
+        try {
+          const profRes = await fetch(profEndpoint, {
+            headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/json' },
+          }).catch(() => null);
+
+          if (profRes && profRes.ok) {
+            const profData = await profRes.json().catch(() => ({}));
+            const userData = profData.data || profData;
+            if (userData && (userData.id || userData.name || userData.first_name)) {
+              setUserSession(userData, accessToken);
+              isLoading.value = false;
+              return true;
+            }
+          }
+        } catch {}
+      }
+    }
+
+    // 3. Fallback to Backend Proxy API
     try {
       const response = await fetch('/api/auth/hemis-oauth', {
         method: 'POST',
@@ -179,7 +242,11 @@ export function useAuth() {
           setUserSession(resData.user, resData.token);
           return true;
         } else {
-          authError.value = resData.message || "OAuth avtorizatsiyada xatolik yuz berdi.";
+          let msg = resData.message || "OAuth avtorizatsiyada xatolik yuz berdi.";
+          if (msg.includes('<!DOCTYPE html') || msg.includes('451')) {
+            msg = "HEMIS serveri xorijiy IP manzillarni taqiqlagan (HTTP 451). O'zbekiston internet tarmog'ida ekanligingizni tekshiring.";
+          }
+          authError.value = msg;
           return false;
         }
       }

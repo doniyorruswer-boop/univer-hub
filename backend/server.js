@@ -260,12 +260,17 @@ app.post('/api/auth/hemis-oauth', async (req, res) => {
 
     if (!accessToken) {
       const errDetails = lastTokenError?.response?.data;
-      const detailMsg = typeof errDetails === 'object' ? JSON.stringify(errDetails) : (errDetails || lastTokenError?.message || '');
+      let detailMsg = "Parametrlar noto'g'ri yoki HTTP 451 (Faqat O'zbekiston IP manzillariga ruxsat berilgan)";
+      if (typeof errDetails === 'string' && (errDetails.includes('451') || errDetails.includes('Kirish cheklangan'))) {
+        detailMsg = "HEMIS serveri faqat O'zbekiston IP manzillaridan ulanishga ruxsat beradi (HTTP 451 - Kirish cheklangan).";
+      } else if (typeof errDetails === 'object') {
+        detailMsg = JSON.stringify(errDetails);
+      }
       console.error("[HEMIS OAuth] Could not exchange code for token:", detailMsg);
       return res.status(401).json({
         success: false,
-        message: `HEMIS OAuth token olishda xatolik yuz berdi (${detailMsg || 'Parametrlar noto\'g\'ri'})`,
-        error: errDetails || lastTokenError?.message
+        message: `HEMIS OAuth token olishda xatolik: ${detailMsg}`,
+        error: detailMsg
       });
     }
 
