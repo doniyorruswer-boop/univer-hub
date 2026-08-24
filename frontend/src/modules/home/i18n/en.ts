@@ -22,9 +22,9 @@ export const en: I18nMessages = {
   navPlatforms: 'Platforms',
   platformsDesc: 'All official university web systems — for students, faculty and staff on a single page.',
   heroPoints: [
-    { title: 'Centralized Access', text: 'Bots, HEMIS and the official site in one place.' },
-    { title: 'Quick Navigation', text: 'Reach any service with a single click.' },
-    { title: 'Mobile-Friendly', text: 'Works great on phones and tablets.' },
+    { title: 'Centralized Portal', text: 'Bots, HEMIS and official site in one place.' },
+    { title: 'Single SSO Auth', text: 'Secure HEMIS OAuth2 authentication.' },
+    { title: '24/7 Automated', text: 'Instant requests and digital services.' },
   ],
   metrics: [
     { label: 'Single Entry Point' },

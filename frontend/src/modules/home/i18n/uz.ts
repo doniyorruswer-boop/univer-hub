@@ -23,9 +23,9 @@ export const uz: I18nMessages = {
   navPlatforms: 'Platformalar',
   platformsDesc: "Universitetning barcha rasmiy web tizimlari — talabalar, o'qituvchilar va xodimlar uchun bitta sahifada.",
   heroPoints: [
-    { title: 'Markazlashgan kirish', text: 'Botlar, HEMIS va rasmiy sayt bitta joyda.' },
-    { title: "Tez yo'naltirish", text: "Kerakli xizmatga bir bosish bilan o'tasiz." },
-    { title: 'Mobilga moslashgan', text: 'Telefon va planshetda ham qulay ishlaydi.' },
+    { title: 'Markazlashgan portal', text: 'Botlar, HEMIS va rasmiy sayt bitta joyda.' },
+    { title: 'Yagona SSO kirish', text: 'HEMIS OAuth2 xavfsiz autentifikatsiyasi.' },
+    { title: '24/7 Avtomatlashtirilgan', text: 'Tezkor arizalar va elektron xizmatlar.' },
   ],
   metrics: [
     { label: 'Yagona kirish nuqtasi' },

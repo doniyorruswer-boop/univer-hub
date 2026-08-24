@@ -12,9 +12,9 @@
       <canvas ref="particleCanvas" class="absolute inset-0 w-full h-full block opacity-60 dark:opacity-90"></canvas>
 
       <!-- Soft Luminous Light Blobs -->
-      <div class="absolute -top-36 -left-36 w-[800px] h-[800px] bg-gradient-to-br from-blue-300/30 via-indigo-300/15 to-purple-300/10 dark:from-blue-600/35 dark:via-indigo-600/20 dark:to-purple-600/15 rounded-full blur-[130px] animate-blob-float"></div>
-      <div class="absolute top-10 -right-36 w-[750px] h-[750px] bg-gradient-to-tr from-cyan-300/30 via-blue-300/15 to-indigo-300/10 dark:from-cyan-500/30 dark:via-blue-600/20 dark:to-indigo-600/15 rounded-full blur-[130px] animate-blob-float-reverse"></div>
-      <div class="absolute -bottom-28 left-1/3 w-[550px] h-[550px] bg-gradient-to-t from-sky-200/30 via-blue-200/15 to-transparent dark:from-indigo-600/25 dark:via-blue-600/15 rounded-full blur-[120px] animate-pulse-slow"></div>
+      <div class="absolute -top-36 -left-36 w-[600px] h-[600px] bg-gradient-to-br from-blue-300/30 via-indigo-300/15 to-purple-300/10 dark:from-blue-600/35 dark:via-indigo-600/20 dark:to-purple-600/15 rounded-full blur-[65px] animate-blob-float will-change-transform"></div>
+      <div class="absolute top-10 -right-36 w-[550px] h-[550px] bg-gradient-to-tr from-cyan-300/30 via-blue-300/15 to-indigo-300/10 dark:from-cyan-500/30 dark:via-blue-600/20 dark:to-indigo-600/15 rounded-full blur-[65px] animate-blob-float-reverse will-change-transform"></div>
+      <div class="absolute -bottom-28 left-1/3 w-[450px] h-[450px] bg-gradient-to-t from-sky-200/30 via-blue-200/15 to-transparent dark:from-indigo-600/25 dark:via-blue-600/15 rounded-full blur-[60px] animate-pulse-slow will-change-transform"></div>
 
       <!-- Crisp Tech Grid -->
       <div class="absolute inset-0 bg-[radial-gradient(#0a105215_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(#38bdf830_1.5px,transparent_1.5px)] [bg-size:36px_36px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_10%,#000_85%,transparent_100%)]"></div>
@@ -30,7 +30,7 @@
           <!-- Title -->
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.12]">
             {{ t.heroTagline.split('—')[0] || 'Barcha xizmatlar' }} <br class="hidden sm:inline" />
-            <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0A1052] via-blue-700 to-purple-800 dark:from-blue-400 dark:via-indigo-300 dark:to-white pb-3">
+            <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0A1052] via-blue-600 to-purple-600 dark:from-blue-400 dark:via-indigo-300 dark:to-white pb-3">
               {{ t.heroTagline.split('—')[1] || 'bitta platformada' }}
               <!-- Creative Underline Accent SVG -->
               <svg class="absolute bottom-0 left-0 w-full h-3.5 text-[#DA8B1D] dark:text-amber-400 overflow-visible" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,25 +40,26 @@
             </span>
           </h1>
 
-          <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
-            {{ t.heroText }}
-          </p>
-
           <!-- Feature Chips Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 py-3 border-y border-slate-200/80 dark:border-slate-800 my-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 py-3 border-y border-slate-200/80 dark:border-slate-800/80 my-6">
             <div 
               v-for="(point, idx) in t.heroPoints" 
               :key="idx" 
-              class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/80 hover:border-blue-300 dark:hover:border-blue-700/60 transition-colors"
+              class="group flex items-center gap-3 p-3 rounded-xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/80 hover:border-blue-400 dark:hover:border-blue-500/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 transform hover:-translate-y-0.5 cursor-default"
             >
-              <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950 text-[#0A1052] dark:text-blue-400 flex items-center justify-center shrink-0 shadow-xs">
-                <span class="material-symbols-outlined text-lg">
-                  {{ heroIcons[idx] || 'shield' }}
+              <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/15 to-indigo-500/15 dark:from-blue-500/25 dark:to-indigo-500/25 text-[#0A1052] dark:text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/20 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-indigo-600 group-hover:text-white transition-all duration-300 shadow-xs">
+                <span class="material-symbols-outlined text-xl">
+                  {{ heroIcons[idx] || 'grid_view' }}
                 </span>
               </div>
-              <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 leading-snug">
-                {{ point.title }}
-              </span>
+              <div>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-100 leading-snug block group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {{ point.title }}
+                </span>
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 leading-tight block line-clamp-1">
+                  {{ point.text }}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -66,17 +67,17 @@
           <div class="flex flex-wrap items-center gap-4 pt-2">
             <a 
               href="#platforms" 
-              class="relative group overflow-hidden bg-gradient-to-r from-[#0A1052] via-blue-900 to-indigo-900 dark:from-blue-600 dark:to-indigo-600 text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:shadow-xl hover:shadow-blue-900/20 dark:hover:shadow-blue-500/25 transition-all duration-300 flex items-center gap-2.5 cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+              class="relative group overflow-hidden bg-gradient-to-r from-[#0A1052] via-blue-900 to-indigo-900 dark:from-blue-600 dark:to-indigo-600 text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:shadow-2xl hover:shadow-blue-900/30 dark:hover:shadow-blue-500/35 transition-all duration-300 flex items-center gap-2.5 cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0 border border-white/10"
             >
               <span class="relative z-10">{{ t.startBtn }}</span>
               <span class="material-symbols-outlined text-sm relative z-10 group-hover:translate-x-1 transition-transform">login</span>
-              <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
             </a>
             
             <a 
               :href="websiteUrl" 
               target="_blank" 
-              class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-white font-semibold text-sm px-6 py-3.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 flex items-center gap-2 cursor-pointer hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0"
+              class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-white font-semibold text-sm px-6 py-3.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 flex items-center gap-2 cursor-pointer hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <span>{{ t.mainSiteBtn }}</span>
               <span class="material-symbols-outlined text-sm text-slate-500 dark:text-slate-400">open_in_new</span>
@@ -277,7 +278,7 @@ function launchPlatform(baseUrl: string, platformId: string) {
   window.open(ssoUrl, '_blank');
 }
 
-const heroIcons = ['shield', 'monitoring', 'smartphone'];
+const heroIcons = ['grid_view', 'verified_user', 'bolt'];
 
 // Variant 1: Enhanced AI Neural Network & Large Hub Node Engine
 onMounted(() => {
@@ -296,25 +297,26 @@ onMounted(() => {
   };
   window.addEventListener('resize', handleResize);
 
-  // 1. Standard Neural Nodes (Enlarged size)
-  const particleCount = 85;
+  // 1. Neural Nodes
+  const isMobile = window.innerWidth < 768;
+  const particleCount = isMobile ? 35 : 55;
   const particles = Array.from({ length: particleCount }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 1.4,
-    vy: (Math.random() - 0.5) * 1.4,
-    radius: Math.random() * 3.5 + 2.5,
+    vx: (Math.random() - 0.5) * 1.0,
+    vy: (Math.random() - 0.5) * 1.0,
+    radius: Math.random() * 2.5 + 2,
     color: ['#38BDF8', '#818CF8', '#C084FC', '#34D399', '#F43F5E'][Math.floor(Math.random() * 5)]
   }));
 
-  // 2. Large AI Constellation Hub Nodes (Big Glowing Orbs)
-  const hubCount = 7;
+  // 2. AI Constellation Hub Nodes
+  const hubCount = isMobile ? 3 : 5;
   const hubs = Array.from({ length: hubCount }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.7,
-    vy: (Math.random() - 0.5) * 0.7,
-    radius: Math.random() * 8 + 10,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    radius: Math.random() * 6 + 7,
     pulse: Math.random() * Math.PI,
     color: ['#38BDF8', '#818CF8', '#A855F7', '#34D399'][Math.floor(Math.random() * 4)]
   }));
@@ -331,25 +333,23 @@ onMounted(() => {
       if (h.x < 0 || h.x > width) h.vx *= -1;
       if (h.y < 0 || h.y > height) h.vy *= -1;
 
-      const currentRadius = h.radius + Math.sin(h.pulse) * 3;
+      const currentRadius = h.radius + Math.sin(h.pulse) * 2;
 
       // Outer Glowing Ring Halo
       ctx.beginPath();
-      ctx.arc(h.x, h.y, currentRadius * 1.8, 0, Math.PI * 2);
+      ctx.arc(h.x, h.y, currentRadius * 1.6, 0, Math.PI * 2);
       ctx.strokeStyle = h.color;
-      ctx.globalAlpha = 0.25;
-      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.2;
+      ctx.lineWidth = 1.5;
       ctx.stroke();
-      ctx.globalAlpha = 1;
 
       // Inner Core Orb
       ctx.beginPath();
       ctx.arc(h.x, h.y, currentRadius, 0, Math.PI * 2);
       ctx.fillStyle = h.color;
-      ctx.shadowBlur = 25;
-      ctx.shadowColor = h.color;
+      ctx.globalAlpha = 0.85;
       ctx.fill();
-      ctx.shadowBlur = 0;
+      ctx.globalAlpha = 1.0;
     });
 
     // Update & Draw Standard Particles
@@ -365,46 +365,44 @@ onMounted(() => {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fillStyle = p.color;
-      ctx.shadowBlur = 14;
-      ctx.shadowColor = p.color;
+      ctx.globalAlpha = 0.9;
       ctx.fill();
-      ctx.shadowBlur = 0;
+      ctx.globalAlpha = 1.0;
 
-      // Connect nearby particles with thick web lines
+      // Connect nearby particles with web lines
       for (let j = i + 1; j < particleCount; j++) {
         const p2 = particles[j];
         const dx = p.x - p2.x;
         const dy = p.y - p2.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const distSq = dx * dx + dy * dy;
 
-        if (dist < 185) {
+        if (distSq < 22500) { // 150px * 150px
+          const dist = Math.sqrt(distSq);
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p2.x, p2.y);
-          const alpha = (1 - dist / 185) * 0.38;
+          const alpha = (1 - dist / 150) * 0.35;
           ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
-          ctx.lineWidth = 1.4;
+          ctx.lineWidth = 1.2;
           ctx.stroke();
         }
       }
 
-      // Connect particle to mouse if close (Wide Range Interactive Laser Tether)
+      // Connect particle to mouse if close
       if (mouseX.value > 0 && mouseY.value > 0) {
         const mdx = p.x - mouseX.value;
         const mdy = p.y - mouseY.value;
-        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+        const mdistSq = mdx * mdx + mdy * mdy;
 
-        if (mdist < 280) {
+        if (mdistSq < 48400) { // 220px * 220px
+          const mdist = Math.sqrt(mdistSq);
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouseX.value, mouseY.value);
-          const alpha = (1 - mdist / 280) * 0.75;
+          const alpha = (1 - mdist / 220) * 0.7;
           ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
-          ctx.lineWidth = 2.2;
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = '#38BDF8';
+          ctx.lineWidth = 1.8;
           ctx.stroke();
-          ctx.shadowBlur = 0;
         }
       }
     }
