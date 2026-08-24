@@ -153,7 +153,7 @@
 
             <!-- Bento Item 3: ARM Kutubxona Card -->
             <div 
-              @click="launchPlatform('https://arm.namdtu.uz', 'arm')"
+              @click="launchPlatform('https://library.namdtu.uz/', 'arm')"
               class="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-900/5 dark:shadow-black/40 hover:border-amber-400 dark:hover:border-amber-500/60 transition-all duration-300 group cursor-pointer"
             >
               <div class="flex items-center justify-between mb-3">
@@ -172,18 +172,34 @@
             <div class="sm:col-span-2 p-3.5 rounded-2xl bg-slate-50/80 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
               <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 pl-1">{{ t.quickAccess }}</span>
               <div class="flex flex-wrap items-center gap-2">
-                <a href="#platforms" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 transition-colors">
+                <button 
+                  @click="launchPlatform('https://student.namdtu.uz', 'hemis')"
+                  class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                >
                   HEMIS ↗
-                </a>
-                <a href="#platforms" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 transition-colors">
+                </button>
+                <a 
+                  href="https://t.me/nstu_tech_support_bot" 
+                  target="_blank" 
+                  rel="noopener"
+                  class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                >
                   Bot ↗
                 </a>
-                <a href="#platforms" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 transition-colors">
+                <a 
+                  href="https://library.namdtu.uz/" 
+                  target="_blank" 
+                  rel="noopener"
+                  class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                >
                   Kutubxona ↗
                 </a>
-                <a href="#platforms" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 transition-colors">
+                <button 
+                  @click="launchPlatform('https://student-elms.namdtu.uz/', 'lms')"
+                  class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                >
                   LMS ↗
-                </a>
+                </button>
               </div>
             </div>
 
@@ -270,12 +286,12 @@ function handleMouseLeave() {
 }
 
 function launchPlatform(baseUrl: string, platformId: string) {
-  if (!isLoggedIn.value) {
-    router.push('/login');
-    return;
+  if (isLoggedIn.value) {
+    const ssoUrl = getSsoRedirectUrl(baseUrl, platformId);
+    window.open(ssoUrl, '_blank');
+  } else {
+    window.open(baseUrl, '_blank');
   }
-  const ssoUrl = getSsoRedirectUrl(baseUrl, platformId);
-  window.open(ssoUrl, '_blank');
 }
 
 const heroIcons = ['grid_view', 'verified_user', 'bolt'];
