@@ -130,7 +130,7 @@
               class="w-full py-2.5 px-4 rounded-lg bg-[#0A1052] hover:bg-slate-900 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               <span v-if="isLoading" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-              <span v-else>Kirish</span>
+              <span v-else>Login</span>
             </button>
 
           </form>
@@ -141,14 +141,14 @@
             <span class="bg-white dark:bg-[#0f172a] px-3 text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase shrink-0">yoki</span>
           </div>
 
-          <!-- OneID / HEMIS OAuth Button -->
+          <!-- HEMIS OAuth Button -->
           <button
             type="button"
             @click="handleOAuthRedirect"
             class="w-full py-2.5 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow cursor-pointer"
           >
             <span class="material-symbols-outlined text-lg">fingerprint</span>
-            <span>OneID / HEMIS OAuth orqali kirish</span>
+            <span>HEMIS orqali kirish</span>
           </button>
 
           <!-- Footer note -->

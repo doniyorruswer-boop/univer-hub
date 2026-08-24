@@ -131,7 +131,7 @@ export const uz: I18nMessages = {
   officialBotTag: 'Telegram Bot',
   officialPortalTag: 'Asosiy Portal',
   eLibraryTag: 'E-Kutubxona',
-  loginBtnText: 'HEMIS Kirish',
+  loginBtnText: 'Login',
   logoutBtnText: 'Tizimdan Chiqish',
   myProfileText: 'HEMIS Shaxsiy Kabinet',
   activeSsoText: 'HEMIS Tizimi Faol',
@@ -152,7 +152,7 @@ export const uz: I18nMessages = {
   forgotPassword: 'Parolni unutdingizmi?',
   itCenterFooter: 'NamDTU IT Markazi',
   rememberMe: 'Meni eslab qol',
-  oneIdLogin: 'OneID orqali kirish',
+  oneIdLogin: 'HEMIS orqali kirish',
   hemisStudentSubtitle: 'Talabalar uchun akademik portal',
   hemisTeacherSubtitle: 'O\'qituvchilar va xodimlar uchun portal',
 };

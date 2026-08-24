@@ -198,14 +198,14 @@
               <span class="bg-slate-50 dark:bg-[#070c14] px-3 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase shrink-0">yoki</span>
             </div>
 
-            <!-- OneID / HEMIS OAuth Button -->
+            <!-- HEMIS OAuth Button -->
             <button
               type="button"
               @click="handleOAuthRedirect"
               class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-all duration-150 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
             >
               <span class="material-symbols-outlined text-xl">fingerprint</span>
-              <span>{{ t.oneIdLogin || 'OneID / HEMIS OAuth orqali kirish' }}</span>
+              <span>{{ t.oneIdLogin || 'HEMIS orqali kirish' }}</span>
             </button>
           </div>
 
