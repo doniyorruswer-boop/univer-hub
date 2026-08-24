@@ -138,7 +138,7 @@ app.post('/api/auth/hemis-login', async (req, res) => {
 
 // HEMIS OAuth 2.0 / OneID Configuration
 const HEMIS_OAUTH_CLIENT_ID = process.env.HEMIS_OAUTH_CLIENT_ID || '9';
-const HEMIS_OAUTH_CLIENT_SECRET = process.env.HEMIS_OAUTH_CLIENT_SECRET;
+const HEMIS_OAUTH_CLIENT_SECRET = process.env.HEMIS_OAUTH_CLIENT_SECRET || '8Pgarj7N-NpEHy2FeqWq1o2otc2ll4c2Pfa4vQem';
 const HEMIS_OAUTH_REDIRECT_URI = process.env.HEMIS_OAUTH_REDIRECT_URI || 'https://namdtu-hub-eta.vercel.app/home';
 const HEMIS_OAUTH_AUTHORIZE_URL = process.env.HEMIS_OAUTH_AUTHORIZE_URL || 'https://student.namdtu.uz/oauth/authorize';
 const HEMIS_TEACHER_OAUTH_AUTHORIZE_URL = process.env.HEMIS_TEACHER_OAUTH_AUTHORIZE_URL || 'https://hemis.namdtu.uz/oauth/authorize';
@@ -167,7 +167,7 @@ app.post('/api/auth/hemis-oauth', async (req, res) => {
     });
   }
 
-  const effectiveRedirectUri = redirectUri || HEMIS_OAUTH_REDIRECT_URI;
+  const effectiveRedirectUri = (redirectUri || HEMIS_OAUTH_REDIRECT_URI).split('?')[0];
 
   try {
     console.log(`[HEMIS OAuth] Processing auth code: ${code.slice(0, 8)}...`);
@@ -176,8 +176,10 @@ app.post('/api/auth/hemis-oauth', async (req, res) => {
     const tokenEndpoints = [
       `https://student.namdtu.uz/oauth/access-token`,
       `https://student.namdtu.uz/oauth/token`,
+      `https://student.namdtu.uz/rest/v1/oauth/access-token`,
       `https://hemis.namdtu.uz/oauth/access-token`,
       `https://hemis.namdtu.uz/oauth/token`,
+      `https://hemis.namdtu.uz/rest/v1/oauth/access-token`,
       `${HEMIS_BASE_URL.replace('/rest/v1', '')}/oauth/access-token`,
     ];
 
@@ -185,8 +187,42 @@ app.post('/api/auth/hemis-oauth', async (req, res) => {
     let lastTokenError = null;
 
     for (const endpoint of tokenEndpoints) {
+      // 1. Try URL-encoded form data (Standard OAuth 2.0 RFC 6749)
       try {
-        console.log(`[HEMIS OAuth] Attempting token exchange at ${endpoint}`);
+        console.log(`[HEMIS OAuth Form] Attempting token exchange at ${endpoint}`);
+        const params = new URLSearchParams();
+        params.append('client_id', HEMIS_OAUTH_CLIENT_ID);
+        params.append('client_secret', HEMIS_OAUTH_CLIENT_SECRET);
+        params.append('grant_type', 'authorization_code');
+        params.append('code', code);
+        params.append('redirect_uri', effectiveRedirectUri);
+
+        tokenResponse = await axios.post(
+          endpoint,
+          params.toString(),
+          { 
+            httpsAgent,
+            headers: { 
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json',
+              'User-Agent': 'NamDTU-HUB-Gateway/1.0' 
+            },
+            timeout: 10000 
+          }
+        );
+
+        if (tokenResponse?.data?.access_token || tokenResponse?.data?.data?.token || tokenResponse?.data?.token) {
+          console.log(`[HEMIS OAuth Success] Form-urlencoded token match at ${endpoint}`);
+          break;
+        }
+      } catch (err) {
+        lastTokenError = err;
+        console.warn(`[HEMIS OAuth Form] Request failed at ${endpoint}:`, err?.response?.data || err.message);
+      }
+
+      // 2. Try JSON payload
+      try {
+        console.log(`[HEMIS OAuth JSON] Attempting token exchange at ${endpoint}`);
         tokenResponse = await axios.post(
           endpoint,
           {
@@ -208,11 +244,12 @@ app.post('/api/auth/hemis-oauth', async (req, res) => {
         );
 
         if (tokenResponse?.data?.access_token || tokenResponse?.data?.data?.token || tokenResponse?.data?.token) {
+          console.log(`[HEMIS OAuth Success] JSON token match at ${endpoint}`);
           break;
         }
       } catch (err) {
         lastTokenError = err;
-        console.warn(`[HEMIS OAuth] Token request failed at ${endpoint}:`, err?.response?.data || err.message);
+        console.warn(`[HEMIS OAuth JSON] Request failed at ${endpoint}:`, err?.response?.data || err.message);
       }
     }
 
@@ -222,11 +259,13 @@ app.post('/api/auth/hemis-oauth', async (req, res) => {
                         tokenResponse?.data?.data?.access_token;
 
     if (!accessToken) {
-      console.error("[HEMIS OAuth] Could not exchange code for token:", lastTokenError?.response?.data || lastTokenError?.message);
+      const errDetails = lastTokenError?.response?.data;
+      const detailMsg = typeof errDetails === 'object' ? JSON.stringify(errDetails) : (errDetails || lastTokenError?.message || '');
+      console.error("[HEMIS OAuth] Could not exchange code for token:", detailMsg);
       return res.status(401).json({
         success: false,
-        message: "HEMIS OAuth token olishda xatolik yuz berdi. Code eskirgan yoki parametrlar noto'g'ri.",
-        error: lastTokenError?.response?.data || lastTokenError?.message
+        message: `HEMIS OAuth token olishda xatolik yuz berdi (${detailMsg || 'Parametrlar noto\'g\'ri'})`,
+        error: errDetails || lastTokenError?.message
       });
     }
 
