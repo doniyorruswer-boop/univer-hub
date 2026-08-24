@@ -3,8 +3,13 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import https from 'https';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -139,7 +144,7 @@ app.post('/api/auth/hemis-login', async (req, res) => {
 // HEMIS OAuth 2.0 / OneID Configuration
 const HEMIS_OAUTH_CLIENT_ID = process.env.HEMIS_OAUTH_CLIENT_ID || '9';
 const HEMIS_OAUTH_CLIENT_SECRET = process.env.HEMIS_OAUTH_CLIENT_SECRET || '8Pgarj7N-NpEHy2FeqWq1o2otc2ll4c2Pfa4vQem';
-const HEMIS_OAUTH_REDIRECT_URI = process.env.HEMIS_OAUTH_REDIRECT_URI || 'https://namdtu-hub-eta.vercel.app/home';
+const HEMIS_OAUTH_REDIRECT_URI = process.env.HEMIS_OAUTH_REDIRECT_URI || 'https://hub.namdtu.uz/home';
 const HEMIS_OAUTH_AUTHORIZE_URL = process.env.HEMIS_OAUTH_AUTHORIZE_URL || 'https://student.namdtu.uz/oauth/authorize';
 const HEMIS_TEACHER_OAUTH_AUTHORIZE_URL = process.env.HEMIS_TEACHER_OAUTH_AUTHORIZE_URL || 'https://hemis.namdtu.uz/oauth/authorize';
 
@@ -330,12 +335,22 @@ app.post('/api/auth/hemis-oauth', async (req, res) => {
   }
 });
 
+// Serve Vue SPA frontend when self-hosting on hub.namdtu.uz
+const frontendDist = path.join(__dirname, '../frontend/dist');
+app.use(express.static(frontendDist));
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(frontendDist, 'index.html'), (err) => {
+    if (err) next();
+  });
+});
+
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`===================================================`);
-    console.log(`🚀 NamDTU HUB 100% Real HEMIS Authentication Gateway`);
+    console.log(`🚀 NamDTU HUB Self-Hosted Server: https://hub.namdtu.uz`);
     console.log(`📡 Base API: ${HEMIS_BASE_URL}`);
-    console.log(`🔒 Strict Mode: ACTIVE (No demo fallbacks)`);
+    console.log(`🔒 Strict Mode: ACTIVE`);
     console.log(`===================================================`);
   });
 }
