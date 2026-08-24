@@ -135,6 +135,22 @@
 
           </form>
 
+          <!-- Divider -->
+          <div class="relative my-4 flex items-center justify-center">
+            <div class="border-t border-slate-200 dark:border-slate-800 w-full"></div>
+            <span class="bg-white dark:bg-[#0f172a] px-3 text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase shrink-0">yoki</span>
+          </div>
+
+          <!-- OneID / HEMIS OAuth Button -->
+          <button
+            type="button"
+            @click="handleOAuthRedirect"
+            class="w-full py-2.5 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow cursor-pointer"
+          >
+            <span class="material-symbols-outlined text-lg">fingerprint</span>
+            <span>OneID / HEMIS OAuth orqali kirish</span>
+          </button>
+
           <!-- Footer note -->
           <div class="mt-5 text-center text-[11px] text-slate-400 dark:text-slate-500 border-t border-slate-100 dark:border-slate-800/80 pt-3">
             Namangan Davlat Texnika Universiteti &copy; SSO
@@ -150,7 +166,7 @@
 import { ref } from 'vue';
 import { useAuth } from '../../../composables/useAuth';
 
-const { isLoginModalOpen, closeLoginModal, loginWithHemis, isLoading, authError } = useAuth();
+const { isLoginModalOpen, closeLoginModal, loginWithHemis, redirectToHemisOAuth, isLoading, authError } = useAuth();
 
 const role = ref<'student' | 'teacher'>('student');
 const loginInput = ref<string>('');
@@ -165,7 +181,10 @@ async function handleLogin() {
   }
 }
 
-
+function handleOAuthRedirect() {
+  closeLoginModal();
+  redirectToHemisOAuth(role.value);
+}
 </script>
 
 <style scoped>

@@ -173,10 +173,11 @@
               <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 pl-1">{{ t.quickAccess }}</span>
               <div class="flex flex-wrap items-center gap-2">
                 <button 
-                  @click="launchPlatform('https://student.namdtu.uz', 'hemis')"
+                  @click="launchPlatform('https://hemis.namdtu.uz', 'hemis-staff')"
                   class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                  title="Xodimlar va o'qituvchilar uchun HEMIS"
                 >
-                  HEMIS ↗
+                  HEMIS Xodim ↗
                 </button>
                 <a 
                   href="https://t.me/nstu_tech_support_bot" 

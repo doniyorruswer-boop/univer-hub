@@ -130,6 +130,69 @@ export function useAuth() {
     return `${platformBaseUrl}${hasQuery ? '&' : '?'}sso_token=${encodeURIComponent(ssoToken)}&platform=${platformId || 'hub'}`;
   }
 
+  /**
+   * Redirect to HEMIS OAuth 2.0 / OneID Login (Student or Teacher)
+   */
+  async function redirectToHemisOAuth(role: 'student' | 'teacher' = 'student') {
+    const redirectUri = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? `${window.location.origin}/home`
+      : 'https://namdtu-hub-eta.vercel.app/home';
+      
+    try {
+      const res = await fetch(`/api/auth/hemis-oauth-url?role=${role}&redirect_uri=${encodeURIComponent(redirectUri)}`).catch(() => null);
+      if (res && res.ok) {
+        const data = await res.json().catch(() => ({}));
+        if (data.url) {
+          window.location.href = data.url;
+          return;
+        }
+      }
+    } catch {}
+
+    const clientId = import.meta.env.VITE_HEMIS_OAUTH_CLIENT_ID || '9';
+    const baseUrl = role === 'teacher' ? 'https://hemis.namdtu.uz' : 'https://student.namdtu.uz';
+    const authorizeUrl = `${baseUrl}/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}`;
+    window.location.href = authorizeUrl;
+  }
+
+  /**
+   * Complete login using OAuth Authorization Code
+   */
+  async function loginWithOAuthCode(code: string): Promise<boolean> {
+    isLoading.value = true;
+    authError.value = null;
+
+    const redirectUri = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? `${window.location.origin}/home`
+      : 'https://namdtu-hub-eta.vercel.app/home';
+
+    try {
+      const response = await fetch('/api/auth/hemis-oauth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, redirectUri }),
+      }).catch(() => null);
+
+      if (response) {
+        const resData = await response.json().catch(() => ({}));
+        if (response.ok && resData.success && resData.user) {
+          setUserSession(resData.user, resData.token);
+          return true;
+        } else {
+          authError.value = resData.message || "OAuth avtorizatsiyada xatolik yuz berdi.";
+          return false;
+        }
+      }
+      authError.value = "Server bilan bog'lanishda xatolik!";
+      return false;
+    } catch (err: any) {
+      authError.value = err?.message || "OAuth ulanishida xatolik.";
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   return {
     user,
     token,
@@ -140,6 +203,8 @@ export function useAuth() {
     openLoginModal,
     closeLoginModal,
     loginWithHemis,
+    redirectToHemisOAuth,
+    loginWithOAuthCode,
     logout,
     getSsoRedirectUrl,
   };

@@ -191,6 +191,22 @@
               </button>
 
             </form>
+
+            <!-- Divider -->
+            <div class="relative my-5 flex items-center justify-center">
+              <div class="border-t border-slate-200 dark:border-slate-800 w-full"></div>
+              <span class="bg-slate-50 dark:bg-[#070c14] px-3 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase shrink-0">yoki</span>
+            </div>
+
+            <!-- OneID / HEMIS OAuth Button -->
+            <button
+              type="button"
+              @click="handleOAuthRedirect"
+              class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-all duration-150 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
+            >
+              <span class="material-symbols-outlined text-xl">fingerprint</span>
+              <span>{{ t.oneIdLogin || 'OneID / HEMIS OAuth orqali kirish' }}</span>
+            </button>
           </div>
 
           <!-- Bottom Footer Info -->
@@ -214,7 +230,7 @@ import { useLocale } from '../composables/useLocale';
 import { useApp } from '../composables/useApp';
 
 const router = useRouter();
-const { loginWithHemis, isLoading, authError } = useAuth();
+const { loginWithHemis, redirectToHemisOAuth, isLoading, authError } = useAuth();
 const { t } = useLocale();
 const { locale, setLocale } = useApp();
 
@@ -228,6 +244,10 @@ async function handleLogin() {
   if (success) {
     router.push('/home');
   }
+}
+
+function handleOAuthRedirect() {
+  redirectToHemisOAuth(role.value);
 }
 </script>
 
