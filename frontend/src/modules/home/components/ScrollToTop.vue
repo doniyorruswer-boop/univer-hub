@@ -4,9 +4,9 @@
     @click="scrollToTop"
     :class="[
       showButton
-        ? 'opacity-100 translate-y-0 pointer-events-auto shadow-xl'
-        : 'opacity-0 translate-y-6 pointer-events-none',
-      'fixed bottom-6 right-4 sm:bottom-10 sm:right-8 z-[99] w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#0A1052] to-blue-700 dark:from-blue-600 dark:to-indigo-600 text-white border border-white/20 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95'
+        ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto shadow-2xl'
+        : 'opacity-0 translate-y-6 scale-90 pointer-events-none',
+      'fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[999] w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#0A1052] via-blue-900 to-indigo-600 dark:from-blue-600 dark:via-indigo-600 dark:to-purple-600 text-white border border-white/30 backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 shadow-blue-900/40 dark:shadow-indigo-500/30'
     ]"
     aria-label="Yuqoriga qaytish"
     title="Yuqoriga qaytish"
