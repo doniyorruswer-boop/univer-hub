@@ -74,6 +74,14 @@
               <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
             </a>
             
+            <router-link 
+              to="/profile"
+              class="bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 font-semibold text-sm px-6 py-3.5 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/80 transition-all duration-300 flex items-center gap-2 cursor-pointer hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <span class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">badge</span>
+              <span>HEMIS Profil Demo</span>
+            </router-link>
+
             <a 
               :href="websiteUrl" 
               target="_blank" 
@@ -151,20 +159,20 @@
               </p>
             </div>
 
-            <!-- Bento Item 3: ARM Kutubxona Card -->
+            <!-- Bento Item 3: LMS Platform Card -->
             <div 
-              @click="launchPlatform('https://library.namdtu.uz/', 'arm')"
-              class="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-900/5 dark:shadow-black/40 hover:border-amber-400 dark:hover:border-amber-500/60 transition-all duration-300 group cursor-pointer"
+              @click="launchPlatform('https://student-elms.namdtu.uz/', 'lms')"
+              class="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-900/5 dark:shadow-black/40 hover:border-indigo-400 dark:hover:border-indigo-500/60 transition-all duration-300 group cursor-pointer"
             >
               <div class="flex items-center justify-between mb-3">
-                <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
-                  <span class="material-symbols-outlined text-lg">menu_book</span>
+                <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-lg">school</span>
                 </div>
-                <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800">{{ t.eLibraryTag }}</span>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">E-Learning</span>
               </div>
-              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-1 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">ARM Portali</h4>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">LMS Tizimi</h4>
               <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
-                {{ t.armCardDesc }}
+                Masofaviy ta'lim va o'quv resurslari platformasi
               </p>
             </div>
 
@@ -187,14 +195,6 @@
                 >
                   Bot ↗
                 </a>
-                <a 
-                  href="https://library.namdtu.uz/" 
-                  target="_blank" 
-                  rel="noopener"
-                  class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
-                >
-                  Kutubxona ↗
-                </a>
                 <button 
                   @click="launchPlatform('https://student-elms.namdtu.uz/', 'lms')"
                   class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
@@ -210,43 +210,59 @@
       </div>
     </section>
 
-    <!-- Restored & Enhanced Stats Section -->
+    <!-- Live Dynamic HEMIS Statistics Section -->
     <div class="max-w-container-max mx-auto px-gutter pb-12">
-      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
         
-        <div class="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl text-center hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-xl">grid_view</span>
+        <!-- Metric 1: Students -->
+        <div class="group bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-5 rounded-2xl text-center hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 transform hover:-translate-y-0.5">
+          <div class="inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform shadow-xs">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">school</span>
           </div>
-          <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-blue-600 dark:from-white dark:to-blue-300">
-            20+
+          <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-blue-600 dark:from-white dark:to-blue-300">
+            {{ stats.totalStudents.toLocaleString() }}+
           </div>
-          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-            {{ t.navPlatforms }}
-          </div>
-        </div>
-
-        <div class="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl text-center hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 mb-2 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-xl">groups</span>
-          </div>
-          <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-blue-600 dark:from-white dark:to-blue-300">
-            15k+
-          </div>
-          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-            {{ t.metrics[0]?.label || "Foydalanuvchilar" }}
+          <div class="text-[11px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Talabalar Soni
           </div>
         </div>
 
-        <div class="group bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl text-center hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 mb-2 group-hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined text-xl">support_agent</span>
+        <!-- Metric 2: Teachers -->
+        <div class="group bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-5 rounded-2xl text-center hover:border-indigo-500/50 dark:hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 transform hover:-translate-y-0.5">
+          <div class="inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 mb-2 group-hover:scale-110 transition-transform shadow-xs">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">badge</span>
           </div>
-          <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-blue-600 dark:from-white dark:to-blue-300">
-            24/7
+          <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-indigo-600 dark:from-white dark:to-indigo-300">
+            {{ stats.totalTeachers.toLocaleString() }}+
           </div>
-          <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-            {{ t.metrics[1]?.label || "Qo'llab-quvvatlash" }}
+          <div class="text-[11px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            O'qituvchilar
+          </div>
+        </div>
+
+        <!-- Metric 3: Faculties -->
+        <div class="group bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-5 rounded-2xl text-center hover:border-purple-500/50 dark:hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 transform hover:-translate-y-0.5">
+          <div class="inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 mb-2 group-hover:scale-110 transition-transform shadow-xs">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">account_balance</span>
+          </div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-purple-600 dark:from-white dark:to-purple-300">
+            {{ stats.totalFaculties }}+
+          </div>
+          <div class="text-[11px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Fakultetlar
+          </div>
+        </div>
+
+        <!-- Metric 4: Integrated Platforms / Support -->
+        <div class="group bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-5 rounded-2xl text-center hover:border-amber-500/50 dark:hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 transform hover:-translate-y-0.5">
+          <div class="inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 mb-2 group-hover:scale-110 transition-transform shadow-xs">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">grid_view</span>
+          </div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-0.5 tracking-tight bg-clip-text bg-gradient-to-r from-[#0A1052] to-amber-600 dark:from-white dark:to-amber-300">
+            {{ stats.activePlatforms }}+ Tizim
+          </div>
+          <div class="text-[11px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Yagona Ekotizim (24/7)
           </div>
         </div>
 
@@ -260,6 +276,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '../../../composables/useAuth';
 import { useLocale } from '../../../composables/useLocale';
+import { useHemisStats } from '../../../composables/useHemisStats';
 
 defineProps<{
   websiteUrl: string;
@@ -268,6 +285,7 @@ defineProps<{
 const router = useRouter();
 const { t } = useLocale();
 const { isLoggedIn, getSsoRedirectUrl } = useAuth();
+const { stats, isLoading: isStatsLoading } = useHemisStats();
 
 const particleCanvas = ref<HTMLCanvasElement | null>(null);
 let animationFrameId: number | null = null;

@@ -126,15 +126,14 @@
                 </div>
               </div>
 
-              <a 
-                href="https://student.namdtu.uz/dashboard/login" 
-                target="_blank" 
+              <router-link 
+                to="/profile" 
                 @click="isProfileMenuOpen = false"
                 class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 <span class="material-symbols-outlined text-base text-blue-500">badge</span>
                 {{ t.myProfileText }}
-              </a>
+              </router-link>
 
               <button 
                 @click="handleLogout"
@@ -164,11 +163,15 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useApp } from '../../../composables/useApp';
 import { useAuth } from '../../../composables/useAuth';
 import { useLocale } from '../../../composables/useLocale';
 
 import type { Locale } from '../../../composables/useApp';
+
+const router = useRouter();
+const route = useRoute();
 
 const { locale, setLocale, isDark, toggleDark } = useApp();
 const { t } = useLocale();
@@ -218,6 +221,26 @@ let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
 let ionContentEl: Element | null = null;
 
 function scrollTo(id: string) {
+  if (route.path !== '/') {
+    router.push({ path: '/', hash: id === 'hero' ? undefined : `#${id}` }).then(() => {
+      setTimeout(() => {
+        if (id === 'hero') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          const content = document.querySelector('ion-content');
+          if (content && (content as any).scrollToTop) {
+            (content as any).scrollToTop(400);
+          }
+        } else {
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }, 150);
+    });
+    return;
+  }
+
   activeSection.value = id;
   isProgrammaticScroll = true;
 

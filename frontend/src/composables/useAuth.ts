@@ -133,15 +133,15 @@ export function useAuth() {
   /**
    * Redirect to HEMIS OAuth 2.0 / OneID Login (Student or Teacher)
   /**
-   * Redirect to HEMIS OAuth 2.0 / OneID Login
+   * Redirect to HEMIS OAuth 2.0 / OneID Login (Student or Teacher)
    */
-  async function redirectToHemisOAuth(_role: 'student' | 'teacher' = 'student') {
+  async function redirectToHemisOAuth(role: 'student' | 'teacher' = 'student') {
     const redirectUri = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? `${window.location.origin}/home`
       : 'https://hub.namdtu.uz/home';
       
     try {
-      const res = await fetch(`/api/auth/hemis-oauth-url?redirect_uri=${encodeURIComponent(redirectUri)}`).catch(() => null);
+      const res = await fetch(`/api/auth/hemis-oauth-url?role=${role}&redirect_uri=${encodeURIComponent(redirectUri)}`).catch(() => null);
       if (res && res.ok) {
         const data = await res.json().catch(() => ({}));
         if (data.url) {
@@ -152,7 +152,7 @@ export function useAuth() {
     } catch {}
 
     const clientId = import.meta.env.VITE_HEMIS_OAUTH_CLIENT_ID || '9';
-    const baseUrl = 'https://student.namdtu.uz';
+    const baseUrl = role === 'teacher' ? 'https://hemis.namdtu.uz' : 'https://student.namdtu.uz';
     const authorizeUrl = `${baseUrl}/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}`;
     window.location.href = authorizeUrl;
   }
@@ -168,70 +168,8 @@ export function useAuth() {
       ? `${window.location.origin}/home`
       : 'https://hub.namdtu.uz/home';
 
-    const clientId = import.meta.env.VITE_HEMIS_OAUTH_CLIENT_ID || '9';
-    const clientSecret = '8Pgarj7N-NpEHy2FeqWq1o2otc2ll4c2Pfa4vQem';
-
-    // 1. Try Client-side Direct Token Exchange (Bypasses Vercel Foreign Server Geo-IP 451 Block)
-    const tokenEndpoints = [
-      'https://student.namdtu.uz/oauth/access-token',
-      'https://student.namdtu.uz/oauth/token',
-      'https://hemis.namdtu.uz/oauth/access-token',
-      'https://hemis.namdtu.uz/oauth/token',
-    ];
-
-    let accessToken: string | null = null;
-
-    for (const endpoint of tokenEndpoints) {
-      try {
-        const bodyParams = new URLSearchParams();
-        bodyParams.append('client_id', clientId);
-        bodyParams.append('client_secret', clientSecret);
-        bodyParams.append('grant_type', 'authorization_code');
-        bodyParams.append('code', code);
-        bodyParams.append('redirect_uri', redirectUri);
-
-        const tokenRes = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
-          body: bodyParams.toString(),
-        }).catch(() => null);
-
-        if (tokenRes && tokenRes.ok) {
-          const tokenData = await tokenRes.json().catch(() => ({}));
-          accessToken = tokenData.access_token || tokenData.token || tokenData.data?.token || tokenData.data?.access_token;
-          if (accessToken) break;
-        }
-      } catch {}
-    }
-
-    // 2. If client-side got access token, fetch user profile directly from browser (Uzbekistan IP)
-    if (accessToken) {
-      const profileEndpoints = [
-        'https://student.namdtu.uz/rest/v1/account/me',
-        'https://hemis.namdtu.uz/rest/v1/account/me',
-      ];
-
-      for (const profEndpoint of profileEndpoints) {
-        try {
-          const profRes = await fetch(profEndpoint, {
-            headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/json' },
-          }).catch(() => null);
-
-          if (profRes && profRes.ok) {
-            const profData = await profRes.json().catch(() => ({}));
-            const userData = profData.data || profData;
-            if (userData && (userData.id || userData.name || userData.first_name)) {
-              setUserSession(userData, accessToken);
-              isLoading.value = false;
-              return true;
-            }
-          }
-        } catch {}
-      }
-    }
-
-    // 3. Fallback to Backend Proxy API
     try {
+      // Send authorization code to secure Backend Gateway
       const response = await fetch('/api/auth/hemis-oauth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -246,7 +184,7 @@ export function useAuth() {
         } else {
           let msg = resData.message || "OAuth avtorizatsiyada xatolik yuz berdi.";
           if (msg.includes('<!DOCTYPE html') || msg.includes('451')) {
-            msg = "HEMIS serveri xorijiy IP manzillarni taqiqlagan (HTTP 451). O'zbekiston internet tarmog'ida ekanligingizni tekshiring.";
+            msg = "HEMIS serveri faqat O'zbekiston IP manzillaridan ulanishga ruxsat beradi.";
           }
           authError.value = msg;
           return false;
