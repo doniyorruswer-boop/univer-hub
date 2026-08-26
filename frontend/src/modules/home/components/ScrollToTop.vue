@@ -21,63 +21,83 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const showButton = ref(false);
-let ionContentEl: Element | null = null;
-let scrollInnerEl: Element | null = null;
+let timerId: any = null;
+
+function checkScroll(e?: any) {
+  let currentScroll = 0;
+
+  if (e && e.detail && typeof e.detail.scrollTop === 'number') {
+    currentScroll = e.detail.scrollTop;
+  }
+
+  const ionContents = document.querySelectorAll('ion-content');
+  ionContents.forEach(content => {
+    if ((content as any).shadowRoot) {
+      const inner = (content as any).shadowRoot.querySelector('.inner-scroll');
+      if (inner && inner.scrollTop > currentScroll) {
+        currentScroll = inner.scrollTop;
+      }
+    }
+  });
+
+  const winScroll = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  if (winScroll > currentScroll) {
+    currentScroll = winScroll;
+  }
+
+  showButton.value = currentScroll > 150;
+}
 
 function scrollToTop() {
-  const content = document.querySelector('ion-content');
-  if (content && (content as any).scrollToTop) {
-    (content as any).scrollToTop(400);
-  }
+  const ionContents = document.querySelectorAll('ion-content');
+  ionContents.forEach(content => {
+    if ((content as any).scrollToTop) {
+      (content as any).scrollToTop(300);
+    }
+    if ((content as any).getScrollElement) {
+      (content as any).getScrollElement().then((el: HTMLElement) => {
+        if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+    if ((content as any).shadowRoot) {
+      const inner = (content as any).shadowRoot.querySelector('.inner-scroll');
+      if (inner) {
+        inner.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  });
 
-  const hero = document.getElementById('hero');
-  if (hero) {
-    hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+  document.body.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function checkScroll() {
-  const hero = document.getElementById('hero');
-  if (hero) {
-    const rect = hero.getBoundingClientRect();
-    showButton.value = rect.bottom < 120 || rect.top < -150;
-  } else {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
-    showButton.value = scrollTop > 150;
-  }
-}
-
-onMounted(async () => {
+async function attachScrollListeners() {
   window.addEventListener('scroll', checkScroll, { passive: true });
   document.addEventListener('scroll', checkScroll, { passive: true });
 
-  ionContentEl = document.querySelector('ion-content');
-  if (ionContentEl) {
-    ionContentEl.addEventListener('ionScroll', checkScroll as any);
-    ionContentEl.addEventListener('scroll', checkScroll, { passive: true });
+  const ionContents = document.querySelectorAll('ion-content');
+  ionContents.forEach(async (content) => {
+    content.addEventListener('ionScroll', checkScroll as any);
+    content.addEventListener('scroll', checkScroll, { passive: true });
 
-    if ((ionContentEl as any).getScrollElement) {
-      scrollInnerEl = await (ionContentEl as any).getScrollElement();
-      if (scrollInnerEl) {
-        scrollInnerEl.addEventListener('scroll', checkScroll, { passive: true });
+    if ((content as any).getScrollElement) {
+      const el = await (content as any).getScrollElement().catch(() => null);
+      if (el) {
+        el.addEventListener('scroll', checkScroll, { passive: true });
       }
     }
-  }
+  });
+}
 
-  setTimeout(checkScroll, 200);
+onMounted(() => {
+  attachScrollListeners();
+  timerId = setInterval(checkScroll, 300);
 });
 
 onBeforeUnmount(() => {
+  if (timerId) clearInterval(timerId);
   window.removeEventListener('scroll', checkScroll);
   document.removeEventListener('scroll', checkScroll);
-  if (ionContentEl) {
-    ionContentEl.removeEventListener('ionScroll', checkScroll as any);
-    ionContentEl.removeEventListener('scroll', checkScroll);
-  }
-  if (scrollInnerEl) {
-    scrollInnerEl.removeEventListener('scroll', checkScroll);
-  }
 });
 </script>

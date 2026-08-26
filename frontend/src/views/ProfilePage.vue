@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content class="ion-padding-none">
+    <ion-content class="ion-padding-none" :scroll-events="true">
       <div class="min-h-screen flex flex-col bg-slate-50 dark:bg-[#070c18] text-slate-900 dark:text-white transition-colors duration-300">
         
         <!-- App Header Bar -->
@@ -530,6 +530,7 @@
 
         <!-- Page Footer -->
         <HomeFooter website-url="https://namdtu.uz/" />
+        <ScrollToTop />
 
       </div>
     </ion-content>
@@ -541,6 +542,7 @@ import { computed, ref, onMounted } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
 import AppHeader from '../modules/home/components/AppHeader.vue';
 import HomeFooter from '../modules/home/components/HomeFooter.vue';
+import ScrollToTop from '../modules/home/components/ScrollToTop.vue';
 import { useAuth } from '../composables/useAuth';
 import { useApp } from '../composables/useApp';
 import { useHemisApi } from '../composables/useHemisApi';
